@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from 'reactstrap'
 
-export default function SearchForm({ handleChange  }) {
+export default function SearchForm({ handleChangeSearchbar }) {
 
   
 
@@ -12,7 +12,7 @@ export default function SearchForm({ handleChange  }) {
         type="search"
         name="search"
         placeholder="Find a recipe..."
-        onChange={handleChange}
+        onChange={handleChangeSearchbar}
       />
     </section>
   );

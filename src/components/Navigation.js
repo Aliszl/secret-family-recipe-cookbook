@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, Button } from "antd";
 
 const Navigation = () => {
   return (
@@ -24,7 +24,9 @@ const Navigation = () => {
           <Link to="/register">Register </Link>
         </Menu.Item>
         <Menu.Item key="5">
-          <Link to="/logout">logout</Link>
+          <Link to="/logout">
+            <Button color="success">logout</Button>
+          </Link>
         </Menu.Item>
 
       </Menu>

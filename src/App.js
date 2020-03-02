@@ -9,14 +9,13 @@ import { RegisterForm } from "./components/Register";
 import { Login } from "./components/Login";
 import { Context } from "./context/Context";
 import About from "./components/About";
-import {Logout} from "./components/Logout"
+import { Logout } from "./components/Logout";
 // import {handleSubmit} from "./state/hooks/CustomHooks"
 // import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
 const { Header, Content } = Layout;
 
 const App = props => {
-
   const [loadingUser, setLoadingUser] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [recipes, setRecipes] = useState([]);
@@ -37,10 +36,13 @@ const App = props => {
     password: ""
   });
 
-  const handleChange = evt => {
+  const handleChangeSearchbar = evt => {
     setSearchValue(evt.target.value);
   };
 
+  const seeMoreDetails = (evt, id )=> {
+    console.log("click", id );
+  };
   return (
     <div className="App">
       <Context.Provider
@@ -59,13 +61,15 @@ const App = props => {
           withAuth,
           searchValue,
           setSearchValue,
-          handleChange,homeSearch, setHomeSearch
+          handleChangeSearchbar,
+          homeSearch,
+          setHomeSearch,
+          seeMoreDetails
         }}
       >
         <Layout>
           <Header>
             <Navigation />
-          
           </Header>
           <Content>
             <Switch>
