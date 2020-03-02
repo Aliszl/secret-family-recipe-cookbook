@@ -21,6 +21,7 @@ const App = (props) => {
 
   const [loadingUser, setLoadingUser] = useState(false);
 const [registerError, setRegisterError] = useState("");
+
   const [newUser, setNewUser] = useState({
     firstname: "",
     lastname: "",
@@ -29,6 +30,11 @@ const [registerError, setRegisterError] = useState("");
     password: "",
     confirmPassword: ""
   })
+
+  const [loginUser, setLoginUser]=useState( {
+    usernameoremail: "",
+    password: ""
+})
 
   return (
     <div className="App">
@@ -39,7 +45,9 @@ const [registerError, setRegisterError] = useState("");
         registerError,
         setRegisterError,
         newUser, 
-        setNewUser
+        setNewUser,
+        loginUser,
+        setLoginUser
         
       }}
       >

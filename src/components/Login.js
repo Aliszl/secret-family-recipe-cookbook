@@ -1,44 +1,50 @@
-import React, { useRef } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Checkbox} from 'antd';
+import { Form, Input, Button, Checkbox } from "antd";
 import { Context } from "../context/Context";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  wrapperCol: { span: 16 }
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+  wrapperCol: { offset: 8, span: 16 }
 };
 
-export function Login(props){
+export function Login(props) {
+  const { loginUser, setLoginUser } = useContext(Context);
+  const history = useHistory();
 
-  const history = useHistory()
-  const usernameoremailRef = useRef();
-  const passwordRef = useRef();
 
   const onFinish = values => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
-  const handleSubmitLogin = () => {
+  const handleChange = e => {
+    console.log(e.target.value)
+    setLoginUser({
+      ...loginUser,
+      [e.target.name]: e.target.value
+    });
+  };
+  const handleSubmitLogin = (e, inputValues) => {
+    debugger;
     axios
-      .post("https://lambda-cook-book.herokuapp.com/api/auth/login", {
-        usernameoremail: usernameoremailRef.current.value,
-        password: passwordRef.current.value
-      })
+      .post(
+        "https://lambda-cook-book.herokuapp.com/api/auth/login",
+        inputValues
+      )
       .then(res => {
         console.log(res);
 
         localStorage.setItem("token", res.data.payload);
         console.log(res.data.payload);
-  
       })
       .catch(error => {
         alert(error.message);
@@ -47,52 +53,53 @@ export function Login(props){
 
   return (
     <StyledContainer>
-
-    <StyledForm
-      {...layout}
-      name="basic"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
-      <Form.Item
-        label="Username/email"
-        name="usernameoremail"
-        rules={[{ required: true, message: 'Please input your username or email!' }]}
+      <StyledForm
+        {...layout}
+        name="basic"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
-        <Input 
-        //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-         placeholder="Username or email"
-        />
-      </Form.Item>
+        <Form.Item
+          label="Username/email"
+          name="usernameoremail"
+          rules={[
+            { required: true, message: "Please input your username or email!" }
+          ]}
+        >
+          <Input
+            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
+            placeholder="Username or email"
+            onChange={handleChange}
+          />
+        </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input.Password />
-      </Form.Item>
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password 
+          onChange={handleChange}
+          />
+        </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
+        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
 
-      <Form.Item {...tailLayout}>
-        <Button 
-        onClick={handleSubmitLogin}
-        type="primary" htmlType="submit">
-          Submit
-        </Button>
-<br/><br/>
-        <Link to="/register">Register now!</Link>
-      </Form.Item>
-    </StyledForm>
+        <Form.Item {...tailLayout}>
+          <Button onClick={handleSubmitLogin} type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <br />
+          <br />
+          <Link to="/register">Register now!</Link>
+        </Form.Item>
+      </StyledForm>
     </StyledContainer>
   );
-};
-
-
+}
 
 const StyledContainer = styled.div`
   display: flex;
@@ -100,7 +107,6 @@ const StyledContainer = styled.div`
   align-items: center;
   min-height: 80vh;
 `;
-
 
 const StyledForm = styled(Form)`
   max-width: 35rem;

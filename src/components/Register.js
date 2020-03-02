@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import axios from "axios";
 
-
 import { Form, Input, Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
 // import styled from "styled-components";
@@ -17,11 +16,16 @@ const tailLayout = {
 };
 
 export function RegisterForm(props) {
-console.log(props)
-  const { loadingUser, setLoadingUser, setRegisterError, newUser, setNewUser } = useContext(Context);
+  console.log(props);
+  const {
+    loadingUser,
+    setLoadingUser,
+    setRegisterError,
+    newUser,
+    setNewUser
+  } = useContext(Context);
 
-
- console.log(loadingUser)
+  console.log(loadingUser);
   const onFinish = values => {
     console.log("Success:", values);
   };
@@ -30,11 +34,14 @@ console.log(props)
     console.log("Failed:", errorInfo);
   };
 
-
-  function handleSubmit(e, inputValues ) {
+  function handleSubmit(e, inputValues) {
+    console.log(inputValues)
     e.preventDefault();
-       axios
-      .post("https://lambda-cook-book.herokuapp.com/api/auth/register", inputValues)
+    axios
+      .post(
+        "https://lambda-cook-book.herokuapp.com/api/auth/register",
+        inputValues
+      )
       .then(response => {
         console.log(response);
         setLoadingUser(false);
@@ -45,22 +52,26 @@ console.log(props)
         setLoadingUser(false);
         setRegisterError(message);
       });
-   
- 
   }
+  const handleChangeReg = e => {
+    console.log(e.target.value)
+    setNewUser({
+      ...newUser,
+      [e.target.name]: e.target.value
+    });
+  };
 
   return (
     <StyledRegContainer>
-      
       <StyledRegForm
-      onSubmit={e => handleSubmit(e)}
+        // onSubmit={e => handleSubmit(e)}
         {...layout}
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-         <h2>Register</h2>
+        <h2>Register</h2>
         <Form.Item
           label="First name"
           name="firstname"
@@ -69,15 +80,7 @@ console.log(props)
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="first name"
-            onChange={e =>{
-
-              console.log(e.target.value)
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value
-              })
-            }
-            }
+            onChange={handleChangeReg}
           />
         </Form.Item>
 
@@ -89,15 +92,7 @@ console.log(props)
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="last name"
-            onChange={e =>{
-
-              console.log(e.target.value)
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value
-              })
-            }
-            }
+            onChange={handleChangeReg}
           />
         </Form.Item>
         <Form.Item
@@ -108,15 +103,18 @@ console.log(props)
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Username"
-            onChange={e =>{
-
-              console.log(e.target.value)
-              setNewUser({
-                ...newUser,
-                [e.target.name]: e.target.value
-              })
-            }
-            }
+            onChange={handleChangeReg}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
+        >
+          <Input
+            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
+            placeholder="email"
+            onChange={handleChangeReg}
           />
         </Form.Item>
 
@@ -126,16 +124,8 @@ console.log(props)
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input.Password
-           placeholder="Password"
-           onChange={e =>{
-
-            console.log(e.target.value)
-            setNewUser({
-              ...newUser,
-              [e.target.name]: e.target.value
-            })
-          }
-          }
+            placeholder="Password"
+            onChange={handleChangeReg}
           />
         </Form.Item>
         <Form.Item
@@ -143,17 +133,9 @@ console.log(props)
           name="confirmPassword"
           rules={[{ required: true, message: "Please repeat your password!" }]}
         >
-          <Input.Password 
-           placeholder="Re-enter password"
-           onChange={e =>{
-
-            console.log(e.target.value)
-            setNewUser({
-              ...newUser,
-              [e.target.name]: e.target.value
-            })
-          }
-          }
+          <Input.Password
+            placeholder="Re-enter password"
+            onChange={handleChangeReg}
           />
         </Form.Item>
 
@@ -162,7 +144,9 @@ console.log(props)
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button 
+          onClick={(e)=>handleSubmit(e, newUser)}
+          type="primary" htmlType="submit">
             Submit
           </Button>
           <br />
@@ -182,8 +166,8 @@ const StyledRegContainer = styled.div`
 `;
 
 const StyledRegForm = styled(Form)`
-display:flex;
-flex-direction:column;
+  display: flex;
+  flex-direction: column;
   max-width: 35rem;
   padding: 2.5rem !important;
   margin: 2.5rem !important;
