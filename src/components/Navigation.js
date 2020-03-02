@@ -23,6 +23,9 @@ const Navigation = () => {
         <Menu.Item key="4">
           <Link to="/register">Register </Link>
         </Menu.Item>
+        <Menu.Item key="5">
+          <Link to="/logout">Logout</Link>
+        </Menu.Item>
 
       </Menu>
           </>

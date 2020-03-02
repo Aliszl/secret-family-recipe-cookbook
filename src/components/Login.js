@@ -15,7 +15,7 @@ const tailLayout = {
 };
 
 export function Login(props) {
-  const { loginUser, setLoginUser } = useContext(Context);
+  const { loginUser, setLoginUser, initialValues } = useContext(Context);
   const history = useHistory();
 
   const onFinish = values => {
@@ -25,12 +25,14 @@ export function Login(props) {
   const onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
+  
   const handleChange = e => {
     console.log(e.target.value);
     setLoginUser({
       ...loginUser,
       [e.target.name]: e.target.value
     });
+    // setLoginUser(initialValues)
   };
   const handleSubmitLogin = (e, inputValues) => {
     console.log(inputValues);

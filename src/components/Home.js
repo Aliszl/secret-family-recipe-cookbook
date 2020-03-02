@@ -6,8 +6,10 @@ import Recipes from "./Recipes";
 const Home = () => {
   return (
     <MyDiv>
- Home
- <Recipes/>
+ {token ?
+ <Recipes/>:
+ <h1></h1>
+}
     </MyDiv>
   );
 };
