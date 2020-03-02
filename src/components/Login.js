@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Checkbox} from 'antd';
-import { Context } from "../context/context";
-import { withAuth } from "../Hooks/WithAuth";
+import { Context } from "../context/Context";
+import {useHistory} from "react-router-dom";
+import axios from "axios";
+
 
 
 
@@ -18,6 +20,11 @@ const tailLayout = {
 
 
 export function Login(){
+
+  const history =useHistory()
+  const usernameoremailRef = useRef();
+  const passwordRef = useRef();
+
   const onFinish = values => {
     console.log('Success:', values);
   };
@@ -25,7 +32,23 @@ export function Login(){
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
+  const handleSubmitLogin = () => {
+    axios
+      .post("https://lambda-cook-book.herokuapp.com/api/auth/register", {
+        usernameoremail: usernameoremailRef.current.value,
+        password: passwordRef.current.value
+      })
+      .then(res => {
+        console.log(res);
 
+        localStorage.setItem("token", res.data.payload);
+        console.log(res.data.payload);
+  
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  };
 
   return (
     <StyledContainer>
@@ -61,7 +84,9 @@ export function Login(){
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
+        <Button 
+        onClick={handleSubmitLogin}
+        type="primary" htmlType="submit">
           Submit
         </Button>
 <br/><br/>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Context } from "../context/context";
-import { withAuth } from "../Hooks/WithAuth";
+import { Context } from "../context/Context";
+import axios from "axios";
+
 
 import { Form, Input, Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
@@ -15,7 +16,12 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 
-export function RegisterForm() {
+export function RegisterForm(props) {
+console.log(props)
+  const { loadingUser, setLoadingUser, setRegisterError, newUser, setNewUser } = useContext(Context);
+
+
+ console.log(loadingUser)
   const onFinish = values => {
     console.log("Success:", values);
   };
@@ -24,15 +30,37 @@ export function RegisterForm() {
     console.log("Failed:", errorInfo);
   };
 
+
+  function handleSubmit(e, inputValues ) {
+    e.preventDefault();
+       axios
+      .post("https://lambda-cook-book.herokuapp.com/api/auth/register", inputValues)
+      .then(response => {
+        console.log(response);
+        setLoadingUser(false);
+        props.history.push("/login");
+      })
+      .catch(error => {
+        let { message } = error.response.data;
+        setLoadingUser(false);
+        setRegisterError(message);
+      });
+   
+ 
+  }
+
   return (
     <StyledRegContainer>
+      
       <StyledRegForm
+      onSubmit={e => handleSubmit(e)}
         {...layout}
         name="basic"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
+         <h2>Register</h2>
         <Form.Item
           label="First name"
           name="firstname"
@@ -41,6 +69,15 @@ export function RegisterForm() {
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="first name"
+            onChange={e =>{
+
+              console.log(e.target.value)
+              setNewUser({
+                ...newUser,
+                [e.target.name]: e.target.value
+              })
+            }
+            }
           />
         </Form.Item>
 
@@ -51,7 +88,16 @@ export function RegisterForm() {
         >
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-            placeholder="first name"
+            placeholder="last name"
+            onChange={e =>{
+
+              console.log(e.target.value)
+              setNewUser({
+                ...newUser,
+                [e.target.name]: e.target.value
+              })
+            }
+            }
           />
         </Form.Item>
         <Form.Item
@@ -62,6 +108,15 @@ export function RegisterForm() {
           <Input
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Username"
+            onChange={e =>{
+
+              console.log(e.target.value)
+              setNewUser({
+                ...newUser,
+                [e.target.name]: e.target.value
+              })
+            }
+            }
           />
         </Form.Item>
 
@@ -70,14 +125,36 @@ export function RegisterForm() {
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input.Password />
+          <Input.Password
+           placeholder="Password"
+           onChange={e =>{
+
+            console.log(e.target.value)
+            setNewUser({
+              ...newUser,
+              [e.target.name]: e.target.value
+            })
+          }
+          }
+          />
         </Form.Item>
         <Form.Item
           label="Confirm Password"
           name="confirmPassword"
           rules={[{ required: true, message: "Please repeat your password!" }]}
         >
-          <Input.Password />
+          <Input.Password 
+           placeholder="Re-enter password"
+           onChange={e =>{
+
+            console.log(e.target.value)
+            setNewUser({
+              ...newUser,
+              [e.target.name]: e.target.value
+            })
+          }
+          }
+          />
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
