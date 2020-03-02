@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import { RegisterForm } from "./components/Register";
 import { Login } from "./components/Login"
 import { Context } from "./context/Context";
+import About from "./components/About";
 // import {handleSubmit} from "./state/hooks/CustomHooks"
 // import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
 
@@ -53,6 +54,7 @@ const [registerError, setRegisterError] = useState("");
         <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/about" component={About} />
             <Route exact path="/register" component={RegisterForm} />
             <Route exact path="/login" component={Login} />
         </Switch>

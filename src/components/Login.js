@@ -6,9 +6,6 @@ import { Context } from "../context/Context";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
 
-
-
-
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -17,11 +14,9 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
+export function Login(props){
 
-
-export function Login(){
-
-  const history =useHistory()
+  const history = useHistory()
   const usernameoremailRef = useRef();
   const passwordRef = useRef();
 
@@ -34,7 +29,7 @@ export function Login(){
   };
   const handleSubmitLogin = () => {
     axios
-      .post("https://lambda-cook-book.herokuapp.com/api/auth/register", {
+      .post("https://lambda-cook-book.herokuapp.com/api/auth/login", {
         usernameoremail: usernameoremailRef.current.value,
         password: passwordRef.current.value
       })
