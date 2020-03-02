@@ -42,8 +42,8 @@ export function Login(props) {
       .then(response => {
         console.log(response);
 
-        localStorage.setItem("token", response.data.payload);
-        console.log(response.data.payload);
+        localStorage.setItem("token", response.data.token);
+        console.log(response.data.token);
       })
       .catch(error => {
         alert(error.message);
@@ -85,7 +85,7 @@ export function Login(props) {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button onClick={(e)=>handleSubmitLogin(loginUser)} type="primary" htmlType="submit">
+          <Button onClick={(e)=>handleSubmitLogin(e, loginUser)} type="primary" htmlType="submit">
             Submit
           </Button>
           <br />
