@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
 import { Route, Switch } from "react-router-dom";
@@ -10,9 +11,8 @@ import { Login } from "./components/Login";
 import { Context } from "./context/Context";
 import About from "./components/About";
 import { Logout } from "./components/Logout";
-// import {handleSubmit} from "./state/hooks/CustomHooks"
-// import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
+
 const { Header, Content } = Layout;
 
 const App = props => {
@@ -21,6 +21,7 @@ const App = props => {
   const [recipes, setRecipes] = useState([]);
   const [searchValue, setSearchValue] = useLocalStorage("");
   const [homeSearch, setHomeSearch] = useState("");
+  const [recipe, setRecipe] = useState();
 
   const [newUser, setNewUser] = useState({
     firstname: "",
@@ -42,7 +43,18 @@ const App = props => {
 
   const seeMoreDetails = (evt, id )=> {
     console.log("click", id );
+
+    withAuth()
+      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
+      .then(response => {
+        console.log(response.data)
+        setRecipe(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
+  
   return (
     <div className="App">
       <Context.Provider
