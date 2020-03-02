@@ -10,8 +10,8 @@ const Home = () => {
 
 
     </div>
-      <h2>Secret family Receipes</h2>
-      <h3>Mission Statement</h3>
+      <h2>Secret Family Recipes</h2>
+      <h3>Anyone can go out and buy a cookbook these days, but I want a place to store all my secret family recipes, handed down from generation to generation.</h3>
       <h4>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos
          omnis quisquam non. Iste necessitatibus ducimus doloribus corporis 

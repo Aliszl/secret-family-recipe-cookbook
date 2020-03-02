@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import "antd/dist/antd.css";
 import { Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
-
+import { RegisterForm } from "./components/Register";
+import { Login } from "./components/Login"
 const { Header, Content } = Layout;
 
 const App = () => {
@@ -21,7 +21,8 @@ const App = () => {
         <Route exact path="/">
               <Home />
             </Route>
-
+            <Route exact path="/register" component={RegisterForm} />
+            <Route exact path="/login" component={Login} />
         </Switch>
            </Content>
 
