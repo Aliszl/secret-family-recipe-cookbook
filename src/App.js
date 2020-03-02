@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,  Redirect } from "react-router-dom";
 import { Layout, Button } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -47,14 +47,29 @@ const App = props => {
     withAuth()
       .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log(response.data)
-        setRecipe(response.data);
+        console.log(response.data.data)
+        setRecipe(response.data.data);
+    //  <Redirect to={{
+    //    pathname:`/${id}`
+    //  }}/>
       })
       .catch(error => {
         console.error(error);
       });
   };
-  
+  const deleteRecipe = (evt, id )=> {
+    console.log("click", id );
+
+    withAuth()
+      .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
+      .then(response => {
+        console.log("delete:", response.data.data)
+        setRecipe(response.data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   return (
     <div className="App">
       <Context.Provider
@@ -76,7 +91,8 @@ const App = props => {
           handleChangeSearchbar,
           homeSearch,
           setHomeSearch,
-          seeMoreDetails
+          seeMoreDetails,
+          deleteRecipe
         }}
       >
         <Layout>
@@ -92,6 +108,7 @@ const App = props => {
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
+              {/* <Route exact path={`/${id}`} component={Logout} /> */}
             </Switch>
           </Content>
         </Layout>

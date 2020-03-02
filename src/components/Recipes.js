@@ -4,6 +4,7 @@ import Recipe from "./Recipe";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import { Link } from "react-router-dom";
+import { Button } from "antd";
 
 export default function Recipes() {
   const { recipes, setRecipes, withAuth, homeSearch, setHomeSearch } = useContext(Context);
@@ -26,8 +27,9 @@ export default function Recipes() {
   return (
      
       <StyledCards className="recipes">
+         <Button type="primary" >Add a recipe</Button>  
 
-        <h1>Heirloom Recipes:</h1>
+        <h1>Family Heirloom Recipes:</h1>
         
 
           <StyledCard>

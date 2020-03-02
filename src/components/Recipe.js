@@ -18,7 +18,7 @@ const tabList = [
 // 
 const { Meta } = Card;
 export default function Recipes(props) {
-    const { seeMoreDetails } = useContext(Context);
+    const { seeMoreDetails, deleteRecipe } = useContext(Context);
   const {
     id,
     title,
@@ -49,6 +49,7 @@ export default function Recipes(props) {
             />
 <Link>
 <Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
+<Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>
 </Link>
     </Card>
     // <div>
