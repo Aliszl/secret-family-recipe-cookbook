@@ -11,7 +11,7 @@ import { Context } from "./context/Context";
 import About from "./components/About";
 // import {handleSubmit} from "./state/hooks/CustomHooks"
 // import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
-
+import { useLocalStorage } from "./hooks/CustomHooks"
 const { Header, Content } = Layout;
 
 const App = (props) => {
@@ -47,7 +47,8 @@ const [registerError, setRegisterError] = useState("");
         newUser, 
         setNewUser,
         loginUser,
-        setLoginUser
+        setLoginUser, 
+        useLocalStorage
         
       }}
       >

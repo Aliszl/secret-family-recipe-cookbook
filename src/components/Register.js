@@ -2,10 +2,8 @@ import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import axios from "axios";
-
 import { Form, Input, Button, Checkbox } from "antd";
 import { Link } from "react-router-dom";
-// import styled from "styled-components";
 
 const layout = {
   labelCol: { span: 8 },
@@ -16,7 +14,6 @@ const tailLayout = {
 };
 
 export function RegisterForm(props) {
-  console.log(props);
   const {
     loadingUser,
     setLoadingUser,
@@ -35,7 +32,7 @@ export function RegisterForm(props) {
   };
 
   function handleSubmit(e, inputValues) {
-    console.log(inputValues)
+    console.log(inputValues);
     e.preventDefault();
     axios
       .post(
@@ -54,7 +51,7 @@ export function RegisterForm(props) {
       });
   }
   const handleChangeReg = e => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setNewUser({
       ...newUser,
       [e.target.name]: e.target.value
@@ -74,10 +71,11 @@ export function RegisterForm(props) {
         <h2>Register</h2>
         <Form.Item
           label="First name"
-          name="firstname"
+          // name="firstname"
           rules={[{ required: true, message: "Please input your first name!" }]}
         >
           <Input
+            name="firstname"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="first name"
             onChange={handleChangeReg}
@@ -86,10 +84,10 @@ export function RegisterForm(props) {
 
         <Form.Item
           label="Last name"
-          name="lastname"
           rules={[{ required: true, message: "Please input your last name!" }]}
         >
           <Input
+            name="lastname"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="last name"
             onChange={handleChangeReg}
@@ -97,10 +95,10 @@ export function RegisterForm(props) {
         </Form.Item>
         <Form.Item
           label="Username"
-          name="username"
           rules={[{ required: true, message: "Please input your username!" }]}
         >
           <Input
+            name="username"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Username"
             onChange={handleChangeReg}
@@ -108,10 +106,10 @@ export function RegisterForm(props) {
         </Form.Item>
         <Form.Item
           label="Email"
-          name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
         >
           <Input
+            name="email"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="email"
             onChange={handleChangeReg}
@@ -120,20 +118,20 @@ export function RegisterForm(props) {
 
         <Form.Item
           label="Password"
-          name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <Input.Password
+            name="password"
             placeholder="Password"
             onChange={handleChangeReg}
           />
         </Form.Item>
         <Form.Item
           label="Confirm Password"
-          name="confirmPassword"
           rules={[{ required: true, message: "Please repeat your password!" }]}
         >
           <Input.Password
+            name="confirmPassword"
             placeholder="Re-enter password"
             onChange={handleChangeReg}
           />
@@ -144,9 +142,11 @@ export function RegisterForm(props) {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button 
-          onClick={(e)=>handleSubmit(e, newUser)}
-          type="primary" htmlType="submit">
+          <Button
+            onClick={e => handleSubmit(e, newUser)}
+            type="primary"
+            htmlType="submit"
+          >
             Submit
           </Button>
           <br />

@@ -18,7 +18,6 @@ export function Login(props) {
   const { loginUser, setLoginUser } = useContext(Context);
   const history = useHistory();
 
-
   const onFinish = values => {
     console.log("Success:", values);
   };
@@ -27,24 +26,24 @@ export function Login(props) {
     console.log("Failed:", errorInfo);
   };
   const handleChange = e => {
-    console.log(e.target.value)
+    console.log(e.target.value);
     setLoginUser({
       ...loginUser,
       [e.target.name]: e.target.value
     });
   };
   const handleSubmitLogin = (e, inputValues) => {
-    debugger;
+    console.log(inputValues);
     axios
       .post(
         "https://lambda-cook-book.herokuapp.com/api/auth/login",
         inputValues
       )
-      .then(res => {
-        console.log(res);
+      .then(response => {
+        console.log(response);
 
-        localStorage.setItem("token", res.data.payload);
-        console.log(res.data.payload);
+        localStorage.setItem("token", response.data.payload);
+        console.log(response.data.payload);
       })
       .catch(error => {
         alert(error.message);
@@ -62,12 +61,12 @@ export function Login(props) {
       >
         <Form.Item
           label="Username/email"
-          name="usernameoremail"
           rules={[
             { required: true, message: "Please input your username or email!" }
           ]}
         >
           <Input
+            name="usernameoremail"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Username or email"
             onChange={handleChange}
@@ -76,12 +75,9 @@ export function Login(props) {
 
         <Form.Item
           label="Password"
-          name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input.Password 
-          onChange={handleChange}
-          />
+          <Input.Password name="password" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
@@ -89,7 +85,7 @@ export function Login(props) {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button onClick={handleSubmitLogin} type="primary" htmlType="submit">
+          <Button onClick={(e)=>handleSubmitLogin(loginUser)} type="primary" htmlType="submit">
             Submit
           </Button>
           <br />
