@@ -1,8 +1,8 @@
-import React from 'react';
+// import React from 'react';
 import axios from "axios";
 import { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
-import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "../state/state";
+// import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "../state/state";
 
 export function withAuth() {
   const token = localStorage.getItem("token");

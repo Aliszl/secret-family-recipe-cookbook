@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Route, Switch,  Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Layout, Button } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
