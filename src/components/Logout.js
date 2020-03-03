@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 
 export function Logout(props){
   const jumpToLogin= useHistory();
+  localStorage.removeItem("token");
+  
 
-  useEffect(() => {
-    jumpToLogin.push("/home");
-},[]);
-        localStorage.removeItem("token");
+      jumpToLogin.push("/login");
+ 
         
       return null;
 
