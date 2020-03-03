@@ -160,6 +160,10 @@ const StyledContainer = styled.div`
 `;
 
 const StyledForm = styled(Form)`
+display:flex;
+flex-direction:column;
+justify-content:center;
+font-size:3rem;
   width: 50vw;
   font-size:3rem;
   padding: 2.5rem !important;
@@ -167,16 +171,27 @@ const StyledForm = styled(Form)`
   background: #fbfbfb;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
-  @media only screen and (max-width: 600px) {
+  @media(min-width: 768px) {
+    margin:0 auto;
+    width:90%;
+  
+  }
+  /* @media only screen and (max-width: 600px) {
     padding: 2.5rem 1.5rem !important;
     margin: 1.5rem !important;
-  }
+    width: 100vw;
+  } */
   Form.Item{
     font-size:3rem;
   }
   input{
     font-size:3rem;
-    width:90%;
+    width:62%;
     height:50px;
+    @media(min-width: 768px) {
+    margin:0 auto;
+    width:90%;
+  
+  }
   }
 `;
