@@ -8,9 +8,10 @@ import Home from "./components/Home";
 import { RegisterForm } from "./components/Register";
 import { Login } from "./components/Login"
 import { Context } from "./context/Context";
+import About from "./components/About";
 // import {handleSubmit} from "./state/hooks/CustomHooks"
 // import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
-
+import { useLocalStorage } from "./hooks/CustomHooks"
 const { Header, Content } = Layout;
 
 const App = (props) => {
@@ -20,6 +21,7 @@ const App = (props) => {
 
   const [loadingUser, setLoadingUser] = useState(false);
 const [registerError, setRegisterError] = useState("");
+
   const [newUser, setNewUser] = useState({
     firstname: "",
     lastname: "",
@@ -28,6 +30,11 @@ const [registerError, setRegisterError] = useState("");
     password: "",
     confirmPassword: ""
   })
+
+  const [loginUser, setLoginUser]=useState( {
+    usernameoremail: "",
+    password: ""
+})
 
   return (
     <div className="App">
@@ -38,7 +45,10 @@ const [registerError, setRegisterError] = useState("");
         registerError,
         setRegisterError,
         newUser, 
-        setNewUser
+        setNewUser,
+        loginUser,
+        setLoginUser, 
+        useLocalStorage
         
       }}
       >
@@ -53,6 +63,7 @@ const [registerError, setRegisterError] = useState("");
         <Route exact path="/">
               <Home />
             </Route>
+            <Route exact path="/about" component={About} />
             <Route exact path="/register" component={RegisterForm} />
             <Route exact path="/login" component={Login} />
         </Switch>
