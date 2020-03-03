@@ -12,6 +12,7 @@ import { Context } from "./context/Context";
 import About from "./components/About";
 import { Logout } from "./components/Logout";
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
+import AddRecipeForm from "./components/AddRecipeForm";
 
 const { Header, Content } = Layout;
 
@@ -31,6 +32,19 @@ const App = props => {
     password: "",
     confirmPassword: ""
   });
+
+  const [newRecipe, setNewRecipe]=useState({
+      recipe_image: "",
+      title: "",
+      description: "",
+      ingredients: "",
+      directions: "",
+      Notes: "",
+      source: "",
+      bio: "",
+      source_image: ""
+  }
+  )
 
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
@@ -92,13 +106,15 @@ const App = props => {
           homeSearch,
           setHomeSearch,
           seeMoreDetails,
-          deleteRecipe
+          deleteRecipe,
+          newRecipe, 
+          setNewRecipe
         }}
       >
         <Layout>
           <Header>
             <Navigation />
-          </Header>
+                    </Header>
           <Content>
             <Switch>
               <Route exact path="/">
@@ -108,6 +124,7 @@ const App = props => {
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
+              <Route exact path="/addrecipe" component={AddRecipeForm} />
               {/* <Route exact path={`/${id}`} component={Logout} /> */}
             </Switch>
           </Content>
