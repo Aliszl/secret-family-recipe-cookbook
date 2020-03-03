@@ -6,6 +6,8 @@ import { Button } from "antd";
 
 export default function Recipes() {
   const { recipes, setRecipes, withAuth, homeSearch, getAllRecipes } = useContext(Context);
+
+  
   useEffect(() => {
       getAllRecipes()
   },[]);

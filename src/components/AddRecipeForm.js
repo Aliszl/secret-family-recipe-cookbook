@@ -16,6 +16,7 @@ const tailLayout = {
 };
 
 export default function AddRecipeForm(props) {
+  const history = useHistory()
   const { newRecipe, setNewRecipe, initialRecipeFormValues, withAuth, getAllRecipes } = useContext(Context);
 
   const onFinish = values => {
@@ -39,8 +40,8 @@ export default function AddRecipeForm(props) {
       .then(response => {
         console.log(response);
         // props.history.push("/facilityList/");
-        getAllRecipes()
-        // setNewRecipe(initialRecipeFormValues)
+        // getAllRecipes();
+        history.push('/')
       })
       .catch(e => {
         alert(e.message);
