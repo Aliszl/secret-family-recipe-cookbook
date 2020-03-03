@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Route, Switch,  Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Layout, Button } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -12,6 +12,7 @@ import { Context } from "./context/Context";
 import About from "./components/About";
 import { Logout } from "./components/Logout";
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
+import AddRecipeForm from "./components/AddRecipeForm";
 
 const { Header, Content } = Layout;
 
@@ -31,12 +32,35 @@ const App = props => {
     password: "",
     confirmPassword: ""
   });
+  const initialRecipeFormValues = {
+    recipe_image:"https://i.imgur.com/HW2AIVK.jpg",
+    title: "",
+    description: "",
+    ingredients: "",
+    directions: "",
+    Notes: "",
+    source: "",
+    bio: "",
+    source_image: ""
+  };
+  const [newRecipe, setNewRecipe]=useState(initialRecipeFormValues)  
+  
 
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
     password: ""
   });
 
+const getAllRecipes=()=>{
+  withAuth()
+  .get("https://lambda-cook-book.herokuapp.com/api/recipes")
+  .then(response => {
+    setRecipes(response.data.data);
+  })
+  .catch(error => {
+ debugger
+  });
+}
   const handleChangeSearchbar = evt => {
     setSearchValue(evt.target.value);
   };
@@ -63,8 +87,17 @@ const App = props => {
     withAuth()
       .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log("delete:", response.data.data)
+        console.log("delete:", response.data)
         setRecipe(response.data.data);
+        getAllRecipes();
+        // setRecipes(currentRecipes=>{
+        //   return currentRecipes.map(r=>{
+        //     if(r.id === id){
+        //       return response.data
+        //     }
+        //     return r
+        //   })
+        // })
       })
       .catch(error => {
         console.error(error);
@@ -74,6 +107,7 @@ const App = props => {
     <div className="App">
       <Context.Provider
         value={{
+          getAllRecipes,
           loadingUser,
           setLoadingUser,
           registerError,
@@ -92,13 +126,16 @@ const App = props => {
           homeSearch,
           setHomeSearch,
           seeMoreDetails,
-          deleteRecipe
+          deleteRecipe,
+          newRecipe, 
+          setNewRecipe,
+          initialRecipeFormValues
         }}
       >
         <Layout>
           <Header>
             <Navigation />
-          </Header>
+                    </Header>
           <Content>
             <Switch>
               <Route exact path="/">
@@ -108,6 +145,7 @@ const App = props => {
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
+              <Route exact path="/addrecipe" component={AddRecipeForm} />
               {/* <Route exact path={`/${id}`} component={Logout} /> */}
             </Switch>
           </Content>

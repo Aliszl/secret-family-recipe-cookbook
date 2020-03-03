@@ -27,7 +27,15 @@ const Navigation = () => {
           <Link to="/logout">
             <Button color="success">logout</Button>
           </Link>
+
         </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/addrecipe">
+            <Button color="success">+</Button>
+          </Link>
+
+        </Menu.Item>
+          
 
       </Menu>
           </>

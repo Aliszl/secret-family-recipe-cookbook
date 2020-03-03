@@ -1,23 +1,23 @@
 import React, {useContext} from "react";
 import { Card, Avatar, Button } from "antd";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
 
-const tabList = [
-  {
-    key: "tab1",
-    tab: "tab1"
-  },
-  {
-    key: "tab2",
-    tab: "tab2"
-  }
-];
+// const tabList = [
+//   {
+//     key: "tab1",
+//     tab: "tab1"
+//   },
+//   {
+//     key: "tab2",
+//     tab: "tab2"
+//   }
+// ];
 
 // 
 const { Meta } = Card;
-export default function Recipes(props) {
+export default function singleRecipe(props) {
     const { seeMoreDetails, deleteRecipe } = useContext(Context);
   const {
     id,
@@ -33,24 +33,25 @@ export default function Recipes(props) {
     source
   } = props.recipe;
   return (
-    <Card
-      style={{ width:620}}
-      cover={<img alt="example" src={recipe_image} />}
-      actions={[
-        <SettingOutlined key="setting" />,
-        <EditOutlined key="edit" />,
-        <EllipsisOutlined key="ellipsis" />
-      ]}
-    >
-      <Meta
-        avatar={<Avatar src={recipe_image} />}
-        title={title}
-        description={description}
-            />
-
-<Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
+    <h1>Hi from single recipe</h1>
+//     <Card
+//       style={{ width:620}}
+//       cover={<img alt="example" src={recipe_image} />}
+//       actions={[
+//         <SettingOutlined key="setting" />,
+//         <EditOutlined key="edit" />,
+//         <EllipsisOutlined key="ellipsis" />
+//       ]}
+//     >
+//       <Meta
+//         avatar={<Avatar src={recipe_image} />}
+//         title={title}
+//         description={description}
+//             />
+// <Link>
+// <Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
 <Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>
-
+// </Link>
     </Card>
     // <div>
     //   <h1></h1>

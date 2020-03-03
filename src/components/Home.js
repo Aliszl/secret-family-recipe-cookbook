@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import Recipes from "./Recipes";
 import SearchForm from "./SearchForm"
-import { Context } from "../context/Context";
+// import { Context } from "../context/Context";
+//, { useContext } 
 
 const Home = () => {
-  const {searchValue, setSearchValue } = useContext(Context);
+  
   return (
     <MyDiv>
       <br/>
