@@ -1,6 +1,12 @@
 .App {
+  font-family: 'Tangerine', cursive;
   text-align: center;
+
 }
+a{
+  font-size: 2rem;
+}
+
 
 .App-logo {
   height: 40vmin;

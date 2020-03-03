@@ -2,15 +2,13 @@ import React, { useEffect, useContext } from "react";
 import Recipe from "./Recipe";
 import styled from "styled-components";
 import { Context } from "../context/Context";
-import { Button } from "antd";
 
 export default function Recipes() {
-  const { recipes, setRecipes, withAuth, homeSearch, getAllRecipes } = useContext(Context);
+  const { recipes, homeSearch, getAllRecipes } = useContext(Context);
 
-  
   useEffect(() => {
-      getAllRecipes()
-  },[]);
+    getAllRecipes();
+  }, []);
 
   const filteredRecipes = recipes.filter(char =>
     char.title.toLowerCase().includes(homeSearch.toLowerCase())
@@ -20,7 +18,6 @@ export default function Recipes() {
   console.log(filteredRecipes);
   return (
     <StyledCards className="recipes">
-     
       <h1>Secret Family Recipes:</h1>
 
       <StyledCard>
@@ -37,10 +34,15 @@ const StyledCards = styled.div`
   flex-direction: column;
 `;
 const StyledCard = styled.div`
-  margin-top: 20px auto;
-  display: flex;
+  margin-top: 20px;
+    display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media(min-width: 768px) {
+    margin:0 auto;
+  
+  }
 
   img {
     height: 400px;

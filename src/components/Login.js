@@ -44,7 +44,7 @@ export function Login(props) {
 
         localStorage.setItem("token", response.data.token);
         console.log(response.data.token);
-        jumpToHome.push("/")
+        jumpToHome.push("/recipes")
       })
       .catch(error => {
         alert(error.message);

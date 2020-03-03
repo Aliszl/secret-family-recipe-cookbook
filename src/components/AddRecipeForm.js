@@ -41,7 +41,7 @@ export default function AddRecipeForm(props) {
         console.log(response);
         // props.history.push("/facilityList/");
         // getAllRecipes();
-        history.push("/");
+        history.push("/recipes");
       })
       .catch(e => {
         alert(e.message);
@@ -89,7 +89,7 @@ export default function AddRecipeForm(props) {
         >
           <Input
             name="ingredients"
-            placeholder="ingredients list"
+            placeholder="Ingredients list"
             onChange={handleChange}
           />
         </Form.Item>
@@ -100,7 +100,7 @@ export default function AddRecipeForm(props) {
         >
           <Input
             name="directions"
-            placeholder="directions"
+            placeholder="Directions"
             onChange={handleChange}
           />
         </Form.Item>
@@ -108,7 +108,7 @@ export default function AddRecipeForm(props) {
         <Form.Item label="Notes" rules={[{ required: true, message: "Notes" }]}>
           <Input
             name="Notes"
-            placeholder="notes about recipe"
+            placeholder="Notes about recipe"
             onChange={handleChange}
           />
         </Form.Item>
@@ -117,11 +117,11 @@ export default function AddRecipeForm(props) {
           label="entered by"
           rules={[{ required: true, message: "source" }]}
         >
-          <Input name="source" placeholder="source" onChange={handleChange} />
+          <Input name="source" placeholder="Source" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item label="bio" rules={[{ required: true, message: "bio" }]}>
-          <Input name="bio" placeholder="bio" onChange={handleChange} />
+          <Input name="bio" placeholder="Bio" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item
@@ -132,6 +132,7 @@ export default function AddRecipeForm(props) {
             name="source_image"
             //  value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Creative-Tail-People-man-2.svg/128px-Creative-Tail-People-man-2.svg.png"
             onChange={handleChange}
+            placeholder="Avatar Image URL"
           />
         </Form.Item>
 
@@ -150,6 +151,8 @@ export default function AddRecipeForm(props) {
 }
 
 const StyledContainer = styled.div`
+
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,7 +160,8 @@ const StyledContainer = styled.div`
 `;
 
 const StyledForm = styled(Form)`
-  max-width: 35rem;
+  width: 50vw;
+  font-size:3rem;
   padding: 2.5rem !important;
   margin: 2.5rem !important;
   background: #fbfbfb;
@@ -166,5 +170,13 @@ const StyledForm = styled(Form)`
   @media only screen and (max-width: 600px) {
     padding: 2.5rem 1.5rem !important;
     margin: 1.5rem !important;
+  }
+  Form.Item{
+    font-size:3rem;
+  }
+  input{
+    font-size:3rem;
+    width:90%;
+    height:50px;
   }
 `;

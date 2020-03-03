@@ -2,37 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Button } from "antd";
 
+import styled from "styled-components";
+
 const Navigation = () => {
   return (
     <>
       <Menu
-        theme="light"
+        theme="dark"
         mode="horizontal"
         defaultSelectedKeys={["1"]}
-        style={{ lineHeight: "64px" }}
+        style={{ lineHeight: "64px"}}
       >
         <Menu.Item key="1">
-          <Link to="/">Home</Link>
+          <Link to="/">About </Link>
         </Menu.Item>
         <Menu.Item key="2">
-          <Link to="/about">About </Link>
+          <Link to="/recipes">Recipes</Link>
         </Menu.Item>
         <Menu.Item key="3">
+          <Link to="/addrecipe">
+          Add a Recipe
+          </Link>
+          </Menu.Item>
+        <Menu.Item key="4">
           <Link to="/login">Login </Link>
         </Menu.Item>
-        <Menu.Item key="4">
+        <Menu.Item key="5">
           <Link to="/register">Register </Link>
         </Menu.Item>
-        <Menu.Item key="5">
+       
+        <Menu.Item key="6">
           <Link to="/logout">
-            <Button color="success">logout</Button>
+            <Button value="large" color="success">logout</Button>
           </Link>
 
-        </Menu.Item>
-        <Menu.Item key="6">
-          <Link to="/addrecipe">
-            <Button color="success">+</Button>
-          </Link>
+       
 
         </Menu.Item>
           
@@ -43,3 +47,7 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
+// const NavDiv = styled.div`
+
+// `

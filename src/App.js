@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./App.css";
 import "antd/dist/antd.css";
 import { Route, Switch } from "react-router-dom";
-import { Layout, Button } from "antd";
+import { Layout } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
 import { RegisterForm } from "./components/Register";
@@ -33,7 +33,7 @@ const App = props => {
     confirmPassword: ""
   });
   const initialRecipeFormValues = {
-    recipe_image:"https://i.imgur.com/HW2AIVK.jpg",
+    recipe_image: "https://i.imgur.com/HW2AIVK.jpg",
     title: "",
     description: "",
     ingredients: "",
@@ -43,51 +43,50 @@ const App = props => {
     bio: "",
     source_image: ""
   };
-  const [newRecipe, setNewRecipe]=useState(initialRecipeFormValues)  
-  
+  const [newRecipe, setNewRecipe] = useState(initialRecipeFormValues);
 
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
     password: ""
   });
 
-const getAllRecipes=()=>{
-  withAuth()
-  .get("https://lambda-cook-book.herokuapp.com/api/recipes")
-  .then(response => {
-    setRecipes(response.data.data);
-  })
-  .catch(error => {
- debugger
-  });
-}
+  const getAllRecipes = () => {
+    withAuth()
+      .get("https://lambda-cook-book.herokuapp.com/api/recipes")
+      .then(response => {
+        setRecipes(response.data.data);
+      })
+      .catch(error => {
+        debugger;
+      });
+  };
   const handleChangeSearchbar = evt => {
     setSearchValue(evt.target.value);
   };
 
-  const seeMoreDetails = (evt, id )=> {
-    console.log("click", id );
+  const seeMoreDetails = (evt, id) => {
+    console.log("click", id);
 
     withAuth()
       .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log(response.data.data)
+        console.log(response.data.data);
         setRecipe(response.data.data);
-    //  <Redirect to={{
-    //    pathname:`/${id}`
-    //  }}/>
+        //  <Redirect to={{
+        //    pathname:`/${id}`
+        //  }}/>
       })
       .catch(error => {
         console.error(error);
       });
   };
-  const deleteRecipe = (evt, id )=> {
-    console.log("click", id );
+  const deleteRecipe = (evt, id) => {
+    console.log("click", id);
 
     withAuth()
       .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log("delete:", response.data)
+        console.log("delete:", response.data);
         setRecipe(response.data.data);
         getAllRecipes();
         // setRecipes(currentRecipes=>{
@@ -107,7 +106,6 @@ const getAllRecipes=()=>{
     <div className="App">
       <Context.Provider
         value={{
-        
           getAllRecipes,
           loadingUser,
           setLoadingUser,
@@ -128,7 +126,7 @@ const getAllRecipes=()=>{
           setHomeSearch,
           seeMoreDetails,
           deleteRecipe,
-          newRecipe, 
+          newRecipe,
           setNewRecipe,
           initialRecipeFormValues
         }}
@@ -136,13 +134,11 @@ const getAllRecipes=()=>{
         <Layout>
           <Header>
             <Navigation />
-                    </Header>
+          </Header>
           <Content>
             <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/about" component={About} />
+              <Route exact path="/" component={About} />
+              <Route exact path="/recipes" component={Home} />
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
@@ -157,3 +153,4 @@ const getAllRecipes=()=>{
 };
 
 export default App;
+
