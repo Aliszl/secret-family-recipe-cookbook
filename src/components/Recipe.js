@@ -1,10 +1,9 @@
-import React from "react";
-import { Card, Avatar } from "antd";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined
-} from "@ant-design/icons";
+import React, {useContext} from "react";
+import { Card, Avatar, Button } from "antd";
+import { Link } from "react-router-dom";
+import { Context } from "../context/Context";
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
+
 const tabList = [
   {
     key: "tab1",
@@ -16,12 +15,10 @@ const tabList = [
   }
 ];
 
-const contentList = {
-  tab1: <p>content1</p>,
-  tab2: <p>content2</p>
-};
+// 
 const { Meta } = Card;
 export default function Recipes(props) {
+    const { seeMoreDetails, deleteRecipe } = useContext(Context);
   const {
     id,
     title,
@@ -37,7 +34,7 @@ export default function Recipes(props) {
   } = props.recipe;
   return (
     <Card
-      style={{ width: 900 }}
+      style={{ width:620}}
       cover={<img alt="example" src={recipe_image} />}
       actions={[
         <SettingOutlined key="setting" />,
@@ -49,8 +46,11 @@ export default function Recipes(props) {
         avatar={<Avatar src={recipe_image} />}
         title={title}
         description={description}
-        ingredients={ingredients}
-      />
+            />
+<Link>
+<Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
+<Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>
+</Link>
     </Card>
     // <div>
     //   <h1></h1>

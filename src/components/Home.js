@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Recipes from "./Recipes";
-
+import SearchForm from "./SearchForm"
+import { Context } from "../context/Context";
 
 const Home = () => {
+  const {searchValue, setSearchValue } = useContext(Context);
   return (
     <MyDiv>
- Home
- <Recipes/>
+      <br/>
+      <SearchForm/>
+      <Recipes />
     </MyDiv>
   );
 };
@@ -61,4 +64,4 @@ h4 {
   font-size:1vw;
 }
 
-`
+`;

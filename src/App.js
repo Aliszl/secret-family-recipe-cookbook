@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch,  Redirect } from "react-router-dom";
 import { Layout, Button } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -9,19 +10,19 @@ import { RegisterForm } from "./components/Register";
 import { Login } from "./components/Login";
 import { Context } from "./context/Context";
 import About from "./components/About";
-// import {handleSubmit} from "./state/hooks/CustomHooks"
-// import{ loadingUser, setLoadingUser, registerError, setRegisterError }from "./state/state"
+import { Logout } from "./components/Logout";
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
+
 const { Header, Content } = Layout;
 
 const App = props => {
-  const onLogout = props => {
-    localStorage.removeItem("token");
-  };
-
   const [loadingUser, setLoadingUser] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const [searchValue, setSearchValue] = useLocalStorage("");
+  const [homeSearch, setHomeSearch] = useState("");
+  const [recipe, setRecipe] = useState();
+
   const [newUser, setNewUser] = useState({
     firstname: "",
     lastname: "",
@@ -36,6 +37,39 @@ const App = props => {
     password: ""
   });
 
+  const handleChangeSearchbar = evt => {
+    setSearchValue(evt.target.value);
+  };
+
+  const seeMoreDetails = (evt, id )=> {
+    console.log("click", id );
+
+    withAuth()
+      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
+      .then(response => {
+        console.log(response.data.data)
+        setRecipe(response.data.data);
+    //  <Redirect to={{
+    //    pathname:`/${id}`
+    //  }}/>
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  const deleteRecipe = (evt, id )=> {
+    console.log("click", id );
+
+    withAuth()
+      .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
+      .then(response => {
+        console.log("delete:", response.data.data)
+        setRecipe(response.data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
   return (
     <div className="App">
       <Context.Provider
@@ -51,15 +85,19 @@ const App = props => {
           useLocalStorage,
           recipes,
           setRecipes,
-          withAuth
+          withAuth,
+          searchValue,
+          setSearchValue,
+          handleChangeSearchbar,
+          homeSearch,
+          setHomeSearch,
+          seeMoreDetails,
+          deleteRecipe
         }}
       >
         <Layout>
           <Header>
             <Navigation />
-            <Button onClick={onLogout} type="primary">
-              LogOut
-            </Button>
           </Header>
           <Content>
             <Switch>
@@ -69,6 +107,8 @@ const App = props => {
               <Route exact path="/about" component={About} />
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/logout" component={Logout} />
+              {/* <Route exact path={`/${id}`} component={Logout} /> */}
             </Switch>
           </Content>
         </Layout>
