@@ -32,25 +32,35 @@ const App = props => {
     password: "",
     confirmPassword: ""
   });
-
-  const [newRecipe, setNewRecipe]=useState({
-      recipe_image: "",
-      title: "",
-      description: "",
-      ingredients: "",
-      directions: "",
-      Notes: "",
-      source: "",
-      bio: "",
-      source_image: ""
-  }
-  )
+  const initialRecipeFormValues = {
+    recipe_image:"https://i.imgur.com/HW2AIVK.jpg",
+    title: "",
+    description: "",
+    ingredients: "",
+    directions: "",
+    Notes: "",
+    source: "",
+    bio: "",
+    source_image: ""
+  };
+  const [newRecipe, setNewRecipe]=useState(initialRecipeFormValues)  
+  
 
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
     password: ""
   });
 
+const getAllRecipes=()=>{
+  withAuth()
+  .get("https://lambda-cook-book.herokuapp.com/api/recipes")
+  .then(response => {
+    setRecipes(response.data.data);
+  })
+  .catch(error => {
+ debugger
+  });
+}
   const handleChangeSearchbar = evt => {
     setSearchValue(evt.target.value);
   };
@@ -77,8 +87,17 @@ const App = props => {
     withAuth()
       .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log("delete:", response.data.data)
+        console.log("delete:", response.data)
         setRecipe(response.data.data);
+        getAllRecipes();
+        // setRecipes(currentRecipes=>{
+        //   return currentRecipes.map(r=>{
+        //     if(r.id === id){
+        //       return response.data
+        //     }
+        //     return r
+        //   })
+        // })
       })
       .catch(error => {
         console.error(error);
@@ -88,6 +107,7 @@ const App = props => {
     <div className="App">
       <Context.Provider
         value={{
+          getAllRecipes,
           loadingUser,
           setLoadingUser,
           registerError,
@@ -108,7 +128,8 @@ const App = props => {
           seeMoreDetails,
           deleteRecipe,
           newRecipe, 
-          setNewRecipe
+          setNewRecipe,
+          initialRecipeFormValues
         }}
       >
         <Layout>

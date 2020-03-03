@@ -5,17 +5,9 @@ import { Context } from "../context/Context";
 import { Button } from "antd";
 
 export default function Recipes() {
-  const { recipes, setRecipes, withAuth, homeSearch } = useContext(Context);
+  const { recipes, setRecipes, withAuth, homeSearch, getAllRecipes } = useContext(Context);
   useEffect(() => {
-    console.log("recipe component mounted");
-    withAuth()
-      .get("https://lambda-cook-book.herokuapp.com/api/recipes")
-      .then(response => {
-        setRecipes(response.data.data);
-      })
-      .catch(error => {
-        console.log("the data was not returned", error);
-      });
+      getAllRecipes()
   },[]);
 
   const filteredRecipes = recipes.filter(char =>
@@ -26,8 +18,7 @@ export default function Recipes() {
   console.log(filteredRecipes);
   return (
     <StyledCards className="recipes">
-      <Button type="primary">Add a recipe</Button>
-
+     
       <h1>Secret Family Recipes:</h1>
 
       <StyledCard>
