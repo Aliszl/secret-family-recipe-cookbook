@@ -14,7 +14,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 
-export function RegisterForm(props) {
+export default function RegisterForm(props) {
   const {
     loading,
     setLoading,

@@ -1,32 +1,31 @@
 import React, { useState } from "react";
-// import axios from "axios";
-import "./App.css";
-import "antd/dist/antd.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
-import { RegisterForm } from "./components/Register";
-import { Login } from "./components/Login";
-import { Context } from "./context/Context";
-import About from "./components/About";
-import { Logout } from "./components/Logout";
-import { useLocalStorage, withAuth, useForm } from "./hooks/CustomHooks";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SingleRecipe from "./components/SingleRecipe";
-import { useHistory } from "react-router-dom";
 import EditRecipe from "./components/EditRecipeForm ";
-
+import RegisterForm from "./components/Register";
+import Login from "./components/Login";
+import About from "./components/About";
+import Logout from "./components/Logout";
+import { Context } from "./context/Context";
+import { useLocalStorage, withAuth, useForm } from "./hooks/CustomHooks";
+import { useHistory } from "react-router-dom";
+import "./App.css";
+import "antd/dist/antd.css";
 
 const { Header, Content } = Layout;
 
-const App = props => {
+const App = () => {
   const jumpToRecipeID = useHistory();
   const [loading, setLoading] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [searchValue, setSearchValue] = useLocalStorage("");
+  // const [searchValue, setSearchValue] = useLocalStorage("");
   const [homeSearch, setHomeSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const [currentRecipeId, setCurrentRecipeId] = useState(null);
 
@@ -66,9 +65,10 @@ const App = props => {
         debugger;
       });
   };
-  const handleChangeSearchbar = evt => {
-    setSearchValue(evt.target.value);
-  };
+  // const handleChangeSearchbar = evt => {
+  //   console.log(evt.target.value)
+  //   setSearchValue(evt.target.value);
+  // };
 
   const deleteRecipe = (evt, id) => {
     console.log("click", id);
@@ -97,39 +97,14 @@ const App = props => {
         console.error(error);
       });
   };
-  const updateRecipe = ({
-    id,
-    title,
-    recipe_image,
-    description,
-    ingredients,
-    directions,
-    Notes
-  }) => {
-    withAuth()
-    .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, { title,
-    recipe_image,
-    description,
-    ingredients,
-    directions,
-    Notes }).then(res => {
-      
-      setCurrentRecipeId(null)
-  
-      setRecipes(recipes => {
-        return recipes.map(r => {
-          if (r.id === id) {
-            return res.data
-          }
-          return r
-        })
-      })
-    })
-    .catch(err => {
-      debugger
-    })
-
-  };
+  function RouteProtected({ children, ...rest }) {
+    const tokenExists = localStorage.getItem("token");
+    return (
+      <Route {...rest}>
+        {tokenExists ? children : <Redirect to="/login" />}
+      </Route>
+    );
+  }
 
   return (
     <div className="App">
@@ -150,7 +125,7 @@ const App = props => {
           withAuth,
           searchValue,
           setSearchValue,
-          handleChangeSearchbar,
+          // handleChangeSearchbar,
           homeSearch,
           setHomeSearch,
           deleteRecipe,
@@ -162,7 +137,7 @@ const App = props => {
           currentRecipeId,
           setCurrentRecipeId,
           getCurrentRecipeId,
-          useForm 
+          useForm
         }}
       >
         <Layout>
@@ -172,11 +147,15 @@ const App = props => {
           <Content>
             <Switch>
               <Route exact path="/" component={About} />
-              <Route exact path="/recipes" component={Home} />
+              <RouteProtected exact path="/recipes">
+                <Home />
+              </RouteProtected>
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
-              <Route exact path="/addrecipe" component={AddRecipeForm} />
+              <RouteProtected exact path="/addrecipe">
+                <AddRecipeForm />
+              </RouteProtected>
               <Route exact path={`/recipe`} component={SingleRecipe} />
               <Route exact path={`/editrecipe/:id`} component={EditRecipe} />
             </Switch>
@@ -188,3 +167,38 @@ const App = props => {
 };
 
 export default App;
+
+// const updateRecipe = ({
+//   id,
+//   title,
+//   recipe_image,
+//   description,
+//   ingredients,
+//   directions,
+//   Notes
+// }) => {
+//   withAuth()
+//     .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, {
+//       title,
+//       recipe_image,
+//       description,
+//       ingredients,
+//       directions,
+//       Notes
+//     })
+//     .then(res => {
+//       setCurrentRecipeId(null);
+
+//       setRecipes(recipes => {
+//         return recipes.map(r => {
+//           if (r.id === id) {
+//             return res.data;
+//           }
+//           return r;
+//         });
+//       });
+//     })
+//     .catch(err => {
+//       debugger;
+//     });
+// };
