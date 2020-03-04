@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
 import styled from "styled-components";
+import { Button } from "antd";
 
 export default function SingleRecipe() {
   const { recipe } = useContext(Context);
@@ -10,6 +11,7 @@ export default function SingleRecipe() {
       
       <h1>{recipe.id}</h1>
       <h1>{recipe.title}</h1>
+      <Button >Edit Recipe</Button>&nbsp;&nbsp;
       <h1>Ingredients</h1>
        <h1> {recipe.ingredients}</h1>
        <h2>Directions</h2>

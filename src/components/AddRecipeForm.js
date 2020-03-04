@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-// import { withAuth } from "../hooks/CustomHooks";
 import { Form, Input, Button } from "antd";
 import { Context } from "../context/Context";
 import { useHistory } from "react-router-dom";
+import {PictureTwoTone, CameraOutlined} from "@ant-design/icons";
 import styled from "styled-components";
 
 const layout = {
@@ -15,7 +15,7 @@ const tailLayout = {
 
 export default function AddRecipeForm(props) {
   const history = useHistory();
-  const { newRecipe, setNewRecipe, withAuth, getCurrentRecipeId } = useContext(
+  const { newRecipe, setNewRecipe, withAuth} = useContext(
     Context
   );
 
@@ -39,8 +39,6 @@ export default function AddRecipeForm(props) {
       .post("https://lambda-cook-book.herokuapp.com/api/recipes", inputValues)
       .then(response => {
         console.log(response);
-        // props.history.push("/facilityList/");
-        // getAllRecipes();
         history.push("/recipes");
       })
       .catch(e => {
@@ -57,11 +55,13 @@ export default function AddRecipeForm(props) {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          label="Recipe image url"
+          label="Image url"
           rules={[{ required: true, message: "recipe_image" }]}
         >
           <Input
             name="recipe_image"
+            prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+            placeholder="url"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
 
             onChange={handleChange}
@@ -113,7 +113,7 @@ export default function AddRecipeForm(props) {
           />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="entered by"
           rules={[{ required: true, message: "source" }]}
         >
@@ -122,9 +122,9 @@ export default function AddRecipeForm(props) {
 
         <Form.Item label="bio" rules={[{ required: true, message: "bio" }]}>
           <Input name="bio" placeholder="Bio" onChange={handleChange} />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item
+        {/* <Form.Item
           label="source_image"
           rules={[{ required: true, message: "source_image" }]}
         >
@@ -134,7 +134,7 @@ export default function AddRecipeForm(props) {
             onChange={handleChange}
             placeholder="Avatar Image URL"
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item {...tailLayout}>
           <Button
