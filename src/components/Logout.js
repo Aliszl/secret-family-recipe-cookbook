@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-export function Logout(props) {
+export default function Logout(props) {
   const jumpToLogin = useHistory();
   localStorage.removeItem("token");
 

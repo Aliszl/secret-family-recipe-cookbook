@@ -14,10 +14,8 @@ const tailLayout = {
 };
 
 export default function EditRecipeForm() {
-  const { withAuth, useForm, recipes } = useContext(
-    Context
-  );
-  const { inputs, handleInputChange, handleSubmit } = useForm();
+  const { withAuth, recipes } = useContext(Context);
+  // const { inputs, handleInputChange, handleSubmit } = useForm();
   const history = useHistory();
   const { id } = useParams();
 

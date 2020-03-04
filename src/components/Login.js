@@ -15,7 +15,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 
-export function Login(props) {
+export default function Login(props) {
   const { loginUser, setLoginUser } = useContext(Context);
   const jumpToHome = useHistory();
 
