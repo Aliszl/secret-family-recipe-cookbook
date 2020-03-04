@@ -1,70 +1,55 @@
-import React, {useContext} from "react";
-import { Card, Avatar, Button } from "antd";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import { Context } from "../context/Context";
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
-// const tabList = [
-//   {
-//     key: "tab1",
-//     tab: "tab1"
-//   },
-//   {
-//     key: "tab2",
-//     tab: "tab2"
-//   }
-// ];
+export default function SingleRecipe() {
+  const { recipe } = useContext(Context);
 
-// 
-const { Meta } = Card;
-export default function singleRecipe(props) {
-    const { seeMoreDetails, deleteRecipe } = useContext(Context);
-  const {
-    id,
-    title,
-    recipe_image,
-    description,
-    ingredients,
-    directions,
-    prepTime,
-    calories,
-    servings,
-    notes,
-    source
-  } = props.recipe;
   return (
-    <h1>Hi from single recipe</h1>
-//     <Card
-//       style={{ width:620}}
-//       cover={<img alt="example" src={recipe_image} />}
-//       actions={[
-//         <SettingOutlined key="setting" />,
-//         <EditOutlined key="edit" />,
-//         <EllipsisOutlined key="ellipsis" />
-//       ]}
-//     >
-//       <Meta
-//         avatar={<Avatar src={recipe_image} />}
-//         title={title}
-//         description={description}
-//             />
-// <Link>
-// <Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
-<Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>
-// </Link>
-    </Card>
-    // <div>
-    //   <h1></h1>
-    //   <img src={recipe_image} alt="food" />
-    //   <br />
-    //   <h3>{description}</h3>
-    //   <h3>{ingredients}</h3>
-    //   <h3>{directions}</h3>
-    //   <h4>Prep time: {prepTime}</h4>
-    //   <h4>Calories: {calories}</h4>
-    //   <h4>no. servings: {servings}</h4>
-    //   <h3>notes:</h3>
-    //   <h4>source:{source}</h4>
-    // </div>
+    <StyledDiv>
+      
+      <h1>{recipe.id}</h1>
+      <h1>{recipe.title}</h1>
+      <h1>Ingredients</h1>
+       <h1> {recipe.ingredients}</h1>
+       <h2>Directions</h2>
+      <h2>{recipe.directions}</h2>
+      <img src={recipe.recipe_image} alt="food" />
+      <h3>notes:{recipe.notes}</h3>
+      <h3>Calories:{recipe.calories}</h3>
+      <h3>Prep time:{recipe.prepTime}</h3>
+      <h3>Servings:{recipe.servings}</h3>
+      <h3>source:{recipe.source}</h3>
+      
+    </StyledDiv>
   );
 }
+  // styling
+  const StyledDiv = styled.div`
+  margin: 20px auto;
+  width: 80%;
+  border:#a1b5c9 2px solid;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+ h1{
+   font-size:3rem;
+ }
+ h2{
+   font-size:2rem;
+ }
+ h3{
+   font-size:1rem;
+ }
+  `
+
+
+//   @media(min-width: 768px) {
+//     margin:0 auto;
+  
+//   }
+
+//   img {
+//     height: 400px;
+//     width: 30%;

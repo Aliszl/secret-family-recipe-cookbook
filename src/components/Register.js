@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import axios from "axios";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Spin } from "antd";
 import { Link } from "react-router-dom";
+import {  UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const layout = {
   labelCol: { span: 8 },
@@ -15,14 +16,14 @@ const tailLayout = {
 
 export function RegisterForm(props) {
   const {
-    loadingUser,
-    setLoadingUser,
+    loading,
+    setLoading,
     setRegisterError,
     newUser,
     setNewUser
   } = useContext(Context);
 
-  console.log(loadingUser);
+  console.log(loading);
   const onFinish = values => {
     console.log("Success:", values);
   };
@@ -34,6 +35,7 @@ export function RegisterForm(props) {
   function handleSubmit(e, inputValues) {
     console.log(inputValues);
     e.preventDefault();
+
     axios
       .post(
         "https://lambda-cook-book.herokuapp.com/api/auth/register",
@@ -41,12 +43,12 @@ export function RegisterForm(props) {
       )
       .then(response => {
         console.log(response);
-        setLoadingUser(false);
+        setLoading(false);
         props.history.push("/login");
       })
       .catch(error => {
         let { message } = error.response.data;
-        setLoadingUser(false);
+        setLoading(false);
         setRegisterError(message);
       });
   }
@@ -60,6 +62,7 @@ export function RegisterForm(props) {
 
   return (
     <StyledRegContainer>
+      {loading?<Spin/>:null}
       <StyledRegForm
         // onSubmit={e => handleSubmit(e)}
         {...layout}
@@ -76,7 +79,8 @@ export function RegisterForm(props) {
         >
           <Input
             name="firstname"
-            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
+            prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+          
             placeholder="first name"
             onChange={handleChangeReg}
           />
@@ -88,8 +92,8 @@ export function RegisterForm(props) {
         >
           <Input
             name="lastname"
-            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-            placeholder="last name"
+            prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+                     placeholder="last name"
             onChange={handleChangeReg}
           />
         </Form.Item>
@@ -99,8 +103,8 @@ export function RegisterForm(props) {
         >
           <Input
             name="username"
-            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-            placeholder="Username"
+            prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+                       placeholder="Username"
             onChange={handleChangeReg}
           />
         </Form.Item>
@@ -122,6 +126,7 @@ export function RegisterForm(props) {
         >
           <Input.Password
             name="password"
+            prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Password"
             onChange={handleChangeReg}
           />
@@ -132,6 +137,7 @@ export function RegisterForm(props) {
         >
           <Input.Password
             name="confirmPassword"
+            prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Re-enter password"
             onChange={handleChangeReg}
           />
@@ -168,7 +174,7 @@ const StyledRegContainer = styled.div`
 const StyledRegForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  max-width: 35rem;
+  max-width: 50rem;
   padding: 2.5rem !important;
   margin: 2.5rem !important;
   background: #fbfbfb;

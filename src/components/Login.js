@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from "antd";
+import {  UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Context } from "../context/Context";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
@@ -68,7 +69,7 @@ export function Login(props) {
         >
           <Input
             name="usernameoremail"
-            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
+             prefix={<UserOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="Username or email"
             onChange={handleChange}
           />
@@ -77,8 +78,11 @@ export function Login(props) {
         <Form.Item
           label="Password"
           rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password name="password" onChange={handleChange} />
+          >
+          <Input.Password
+           name="password" 
+          prefix={<LockOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+          onChange={handleChange} />
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">

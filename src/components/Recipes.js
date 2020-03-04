@@ -1,7 +1,9 @@
 import React, { useEffect, useContext } from "react";
-import Recipe from "./Recipe";
+import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
 import { Context } from "../context/Context";
+import { Spinner } from "reactstrap";
+
 
 export default function Recipes() {
   const { recipes, homeSearch, getAllRecipes } = useContext(Context);
@@ -14,18 +16,24 @@ export default function Recipes() {
     char.title.toLowerCase().includes(homeSearch.toLowerCase())
   );
 
-  console.log(recipes);
   console.log(filteredRecipes);
   return (
     <StyledCards className="recipes">
       <h1>Secret Family Recipes:</h1>
+      <span>
+
+
+
+      </span>
 
       <StyledCard>
         {filteredRecipes.map(recipe => {
-          return <Recipe key={recipe.id} recipe={recipe} />;
+          return <RecipeCard key={recipe.id} recipe={recipe} />;
         })}
       </StyledCard>
     </StyledCards>
+
+
   );
 }
 const StyledCards = styled.div`
