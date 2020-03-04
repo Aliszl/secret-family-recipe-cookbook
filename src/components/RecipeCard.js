@@ -1,8 +1,9 @@
 import React, {useContext} from "react";
+import { Context } from "../context/Context";
 import { Card, Avatar, Button } from "antd";
 import styled from "styled-components";
-import { Context } from "../context/Context";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
+import { Link} from "react-router-dom";
 
 const tabList = [
   {
@@ -17,8 +18,9 @@ const tabList = [
 
 // 
 const { Meta } = Card;
-export default function Recipes(props) {
-    const { seeMoreDetails, deleteRecipe } = useContext(Context);
+export default function RecipeCard(props) {
+    const { seeMoreDetails, deleteRecipe, setCurrentRecipeId, getCurrentRecipeId } = useContext(Context);
+
   const {
     id,
     title,
@@ -30,7 +32,7 @@ export default function Recipes(props) {
     calories,
     servings,
     notes,
-    source
+    // source
   } = props.recipe;
   return (
       <StyledCard>
@@ -39,23 +41,28 @@ export default function Recipes(props) {
       style={{ width:620}}
       cover={<img alt="example" src={recipe_image} />}
       actions={[
-        // <SettingOutlined key="setting" />,
-        // <EditOutlined key="edit" />,
-        // <EllipsisOutlined key="ellipsis" />
+      
       ]}
     >
       <Meta
-        avatar={<Avatar src={recipe_image} />}
+        // avatar={<Avatar src={source} />}
         title={title}
         description={description}
             />
 
-<Button onClick={(e)=>seeMoreDetails(e, id)}>View details</Button>
-<Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>
+<Button onClick={(e)=>getCurrentRecipeId(e, id)}>View details</Button>&nbsp;&nbsp;
+<Button type="primary" onClick={(e)=>deleteRecipe(e, id)}>Delete</Button>&nbsp;&nbsp;
+
+{/* <Link to={`/${currentRecipeId}`}> */}
+{/* 
+<Button  onClick={(e) => setCurrentRecipeId(e, id)}>Edit</Button> */}
+{/* </Link> */}
 
     </Card>
       </StyledCard>
-    // <div>
+  );
+}
+  // <div>
     //   <h1></h1>
     //   <img src={recipe_image} alt="food" />
     //   <br />
@@ -68,16 +75,11 @@ export default function Recipes(props) {
     //   <h3>notes:</h3>
     //   <h4>source:{source}</h4>
     // </div>
-  );
-}
-
 const StyledCard = styled.div`
   margin: 30px auto;
  
   display: flex;
   flex-direction: column;
-
-
 
   @media(min-width: 768px) {
     margin:0 auto;

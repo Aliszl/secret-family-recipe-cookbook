@@ -13,16 +13,20 @@ import About from "./components/About";
 import { Logout } from "./components/Logout";
 import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
 import AddRecipeForm from "./components/AddRecipeForm";
+import SingleRecipe from "./components/SingleRecipe";
+import { useHistory } from "react-router-dom";
 
 const { Header, Content } = Layout;
 
 const App = props => {
-  const [loadingUser, setLoadingUser] = useState(false);
+  const jumpToRecipeID = useHistory();
+  const [loading, setLoading] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [searchValue, setSearchValue] = useLocalStorage("");
   const [homeSearch, setHomeSearch] = useState("");
-  const [recipe, setRecipe] = useState();
+ 
+  const [currentRecipeId, setCurrentRecipeId] = useState(null);
 
   const [newUser, setNewUser] = useState({
     firstname: "",
@@ -44,12 +48,13 @@ const App = props => {
     source_image: ""
   };
   const [newRecipe, setNewRecipe] = useState(initialRecipeFormValues);
-
+  const [recipe, setRecipe] = useState(initialRecipeFormValues);
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
     password: ""
   });
 
+  
   const getAllRecipes = () => {
     withAuth()
       .get("https://lambda-cook-book.herokuapp.com/api/recipes")
@@ -64,22 +69,6 @@ const App = props => {
     setSearchValue(evt.target.value);
   };
 
-  const seeMoreDetails = (evt, id) => {
-    console.log("click", id);
-
-    withAuth()
-      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
-      .then(response => {
-        console.log(response.data.data);
-        setRecipe(response.data.data);
-        //  <Redirect to={{
-        //    pathname:`/${id}`
-        //  }}/>
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
   const deleteRecipe = (evt, id) => {
     console.log("click", id);
 
@@ -102,13 +91,58 @@ const App = props => {
         console.error(error);
       });
   };
+  
+
+  const getCurrentRecipeId = (evt, id) => {
+    console.log("click", id);
+
+    withAuth()
+      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
+      .then(response => {
+        // console.log(response.data.data.id);
+        setRecipe(response.data.data);
+        setCurrentRecipeId(response.data.data.id);
+        console.log(currentRecipeId);
+        jumpToRecipeID.push("/recipe");
+        //  <Redirect to={{
+        //    pathname:`/${id}`
+        //  }}/>
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  // const getCurrentRecipeId = (evt, id) => {
+  //   console.log("click", id);
+  //   const currentRecipe = recipes.find(recipe => recipe.id === currentRecipeId);
+  // };
+  // const recipeById = (evt, id)=>{
+  // console.log("click", id);
+  // recipes.filter(recipe =>
+  //   recipe =>recipe.id === id
+  // );
+
+
+  const getOneRecipe = () => {
+    withAuth()
+      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${currentRecipeId}`)
+      .then(response => {
+        console.log(response)
+        // setRecipe(response.data.data);
+      })
+      .catch(error => {
+        debugger;
+      });
+  };
+
+  console.log(currentRecipeId);
   return (
     <div className="App">
       <Context.Provider
         value={{
           getAllRecipes,
-          loadingUser,
-          setLoadingUser,
+          loading,
+          setLoading,
           registerError,
           setRegisterError,
           newUser,
@@ -124,11 +158,16 @@ const App = props => {
           handleChangeSearchbar,
           homeSearch,
           setHomeSearch,
-          seeMoreDetails,
           deleteRecipe,
           newRecipe,
           setNewRecipe,
-          initialRecipeFormValues
+          initialRecipeFormValues,
+          recipe,
+          setRecipe,
+          currentRecipeId,
+          setCurrentRecipeId,
+          getOneRecipe,
+          getCurrentRecipeId
         }}
       >
         <Layout>
@@ -143,7 +182,7 @@ const App = props => {
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
               <Route exact path="/addrecipe" component={AddRecipeForm} />
-              {/* <Route exact path={`/${id}`} component={Logout} /> */}
+              <Route exact path={`/recipe`} component={SingleRecipe} />
             </Switch>
           </Content>
         </Layout>
@@ -153,4 +192,3 @@ const App = props => {
 };
 
 export default App;
-

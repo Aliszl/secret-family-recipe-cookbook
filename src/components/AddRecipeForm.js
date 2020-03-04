@@ -15,7 +15,7 @@ const tailLayout = {
 
 export default function AddRecipeForm(props) {
   const history = useHistory();
-  const { newRecipe, setNewRecipe, withAuth, getAllRecipes } = useContext(
+  const { newRecipe, setNewRecipe, withAuth, getCurrentRecipeId } = useContext(
     Context
   );
 
