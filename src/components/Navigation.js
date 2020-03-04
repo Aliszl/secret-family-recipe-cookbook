@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Button } from "antd";
 
-import styled from "styled-components";
-
 const Navigation = () => {
   return (
     <>
@@ -47,7 +45,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-// const NavDiv = styled.div`
-
-// `

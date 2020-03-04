@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Input, Button } from "antd";
 import { Context } from "../context/Context";
-import { useHistory } from "react-router-dom";
-import { CameraOutlined} from "@ant-design/icons";
+import { useHistory, useParams } from "react-router-dom";
+import { CameraOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 
 const layout = {
@@ -13,11 +13,17 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 }
 };
 
-export default function AddRecipeForm(props) {
-  const history = useHistory();
-  const { newRecipe, setNewRecipe, withAuth} = useContext(
+export default function EditRecipeForm() {
+  // console.log(currentRecipeId)
+  const { newRecipe, setNewRecipe, withAuth, useForm, recipes } = useContext(
     Context
   );
+  const { inputs, handleInputChange, handleSubmit } = useForm();
+  const history = useHistory();
+  const { id } = useParams();
+
+  console.log(id);
+  console.log(recipes);
 
   const onFinish = values => {
     console.log("Success:", values);
@@ -27,16 +33,33 @@ export default function AddRecipeForm(props) {
     console.log("Failed:", errorInfo);
   };
 
+  const currentRecipeData = recipes.find(
+    recipe => Number(recipe.id) === Number(id)
+  );
+
+  const [fieldData, setFieldData] = useState({
+    recipe_image: currentRecipeData.recipe_image,
+    title: currentRecipeData.title,
+    description: currentRecipeData.description,
+    ingredients: currentRecipeData.ingredients,
+    directions: currentRecipeData.directions,
+    Notes: currentRecipeData.Notes
+  });
+  console.log(currentRecipeData);
+
   const handleChange = e => {
     console.log(e.target.value);
-    setNewRecipe({
-      ...newRecipe,
+    setFieldData({
+      ...fieldData,
       [e.target.name]: e.target.value
     });
   };
-  const handleSubmitRecipe = (e, inputValues) => {
+  const handleSubmitEdit = () => {
     withAuth()
-      .post("https://lambda-cook-book.herokuapp.com/api/recipes", inputValues)
+      .put(
+        `https://lambda-cook-book.herokuapp.com/api/recipes/${id}`,
+        fieldData
+      )
       .then(response => {
         console.log(response);
         history.push("/recipes");
@@ -45,6 +68,7 @@ export default function AddRecipeForm(props) {
         alert(e.message);
       });
   };
+
   return (
     <StyledContainer>
       <StyledForm
@@ -60,14 +84,15 @@ export default function AddRecipeForm(props) {
         >
           <Input
             name="recipe_image"
-            prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
+            prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }} />}
             placeholder="url"
+            value={fieldData.recipe_image}
             onChange={handleChange}
           />
         </Form.Item>
 
         <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
-          <Input name="title" placeholder="Title" onChange={handleChange} />
+          <Input name="title" placeholder="Title" value={fieldData.title}  onChange={handleChange}/>
         </Form.Item>
 
         <Form.Item
@@ -77,6 +102,7 @@ export default function AddRecipeForm(props) {
           <Input
             name="description"
             placeholder="Description"
+            value={fieldData.description}
             onChange={handleChange}
           />
         </Form.Item>
@@ -88,6 +114,7 @@ export default function AddRecipeForm(props) {
           <Input
             name="ingredients"
             placeholder="Ingredients list"
+            value={fieldData.ingredients}
             onChange={handleChange}
           />
         </Form.Item>
@@ -99,6 +126,7 @@ export default function AddRecipeForm(props) {
           <Input
             name="directions"
             placeholder="Directions"
+            value={fieldData.directions}
             onChange={handleChange}
           />
         </Form.Item>
@@ -107,17 +135,13 @@ export default function AddRecipeForm(props) {
           <Input
             name="Notes"
             placeholder="Notes about recipe"
+            value={fieldData.Notes}
             onChange={handleChange}
           />
         </Form.Item>
 
-
         <Form.Item {...tailLayout}>
-          <Button
-            onClick={e => handleSubmitRecipe(e, newRecipe)}
-            type="primary"
-            htmlType="submit"
-          >
+          <Button type="primary" htmlType="submit" onClick={handleSubmitEdit}>
             Submit Recipe
           </Button>
         </Form.Item>
@@ -127,8 +151,6 @@ export default function AddRecipeForm(props) {
 }
 
 const StyledContainer = styled.div`
-
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,42 +158,38 @@ const StyledContainer = styled.div`
 `;
 
 const StyledForm = styled(Form)`
-display:flex;
-flex-direction:column;
-justify-content:center;
-font-size:3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 3rem;
   width: 50vw;
-  font-size:3rem;
+  font-size: 3rem;
   padding: 2.5rem !important;
   margin: 2.5rem !important;
   background: #fbfbfb;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
-  @media(min-width: 768px) {
-    margin:0 auto;
-    width:90%;
-  
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    width: 90%;
   }
- 
-  Form.Item{
-    font-size:3rem;
+
+  form.Item {
+    font-size: 3rem;
   }
-  input{
-    font-size:3rem;
-    width:62%;
-    height:50px;
-    @media(min-width: 768px) {
-    margin:0 auto;
-    width:90%;
-  
-  }
+  input {
+    font-size: 3rem;
+    width: 62%;
+    height: 50px;
+    @media (min-width: 768px) {
+      margin: 0 auto;
+      width: 90%;
+    }
   }
 `;
 
- /* @media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
     padding: 2.5rem 1.5rem !important;
     margin: 1.5rem !important;
     width: 100vw;
   } */
-
-      

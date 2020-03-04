@@ -1,25 +1,28 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
 import styled from "styled-components";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 export default function SingleRecipe() {
-  const { recipe } = useContext(Context);
-
+  const { recipe, currentRecipeId } = useContext(Context);
+console.log(currentRecipeId)
   return (
     <StyledDiv>
-      
-      <h1>{recipe.id}</h1>
       <h1>{recipe.title}</h1>
+      <Link to={`/editrecipe/${currentRecipeId}`}>
+      <Button >Edit Recipe</Button>
+      </Link>
       <h1>Ingredients</h1>
        <h1> {recipe.ingredients}</h1>
        <h2>Directions</h2>
       <h2>{recipe.directions}</h2>
       <img src={recipe.recipe_image} alt="food" />
       <h3>notes:{recipe.notes}</h3>
-      <h3>Calories:{recipe.calories}</h3>
+      {/* <h3>Calories:{recipe.calories}</h3>
       <h3>Prep time:{recipe.prepTime}</h3>
       <h3>Servings:{recipe.servings}</h3>
-      <h3>source:{recipe.source}</h3>
+      <h3>source:{recipe.source}</h3> */}
       
     </StyledDiv>
   );
