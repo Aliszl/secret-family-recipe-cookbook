@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -97,6 +97,14 @@ const App = () => {
         console.error(error);
       });
   };
+  function RouteProtected({ children, ...rest }) {
+    const tokenExists = localStorage.getItem("token");
+    return (
+      <Route {...rest}>
+        {tokenExists ? children : <Redirect to="/login" />}
+      </Route>
+    );
+  }
 
   return (
     <div className="App">
@@ -139,11 +147,15 @@ const App = () => {
           <Content>
             <Switch>
               <Route exact path="/" component={About} />
-              <Route exact path="/recipes" component={Home} />
+              <RouteProtected exact path="/recipes">
+                <Home />
+              </RouteProtected>
               <Route exact path="/register" component={RegisterForm} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/logout" component={Logout} />
-              <Route exact path="/addrecipe" component={AddRecipeForm} />
+              <RouteProtected exact path="/addrecipe">
+                <AddRecipeForm />
+              </RouteProtected>
               <Route exact path={`/recipe`} component={SingleRecipe} />
               <Route exact path={`/editrecipe/:id`} component={EditRecipe} />
             </Switch>
@@ -156,38 +168,37 @@ const App = () => {
 
 export default App;
 
+// const updateRecipe = ({
+//   id,
+//   title,
+//   recipe_image,
+//   description,
+//   ingredients,
+//   directions,
+//   Notes
+// }) => {
+//   withAuth()
+//     .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, {
+//       title,
+//       recipe_image,
+//       description,
+//       ingredients,
+//       directions,
+//       Notes
+//     })
+//     .then(res => {
+//       setCurrentRecipeId(null);
 
-  // const updateRecipe = ({
-  //   id,
-  //   title,
-  //   recipe_image,
-  //   description,
-  //   ingredients,
-  //   directions,
-  //   Notes
-  // }) => {
-  //   withAuth()
-  //     .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, {
-  //       title,
-  //       recipe_image,
-  //       description,
-  //       ingredients,
-  //       directions,
-  //       Notes
-  //     })
-  //     .then(res => {
-  //       setCurrentRecipeId(null);
-
-  //       setRecipes(recipes => {
-  //         return recipes.map(r => {
-  //           if (r.id === id) {
-  //             return res.data;
-  //           }
-  //           return r;
-  //         });
-  //       });
-  //     })
-  //     .catch(err => {
-  //       debugger;
-  //     });
-  // };
+//       setRecipes(recipes => {
+//         return recipes.map(r => {
+//           if (r.id === id) {
+//             return res.data;
+//           }
+//           return r;
+//         });
+//       });
+//     })
+//     .catch(err => {
+//       debugger;
+//     });
+// };
