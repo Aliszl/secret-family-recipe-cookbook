@@ -14,8 +14,7 @@ const tailLayout = {
 };
 
 export default function EditRecipeForm() {
-  // console.log(currentRecipeId)
-  const { newRecipe, setNewRecipe, withAuth, useForm, recipes } = useContext(
+  const { withAuth, useForm, recipes } = useContext(
     Context
   );
   const { inputs, handleInputChange, handleSubmit } = useForm();
@@ -92,7 +91,12 @@ export default function EditRecipeForm() {
         </Form.Item>
 
         <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
-          <Input name="title" placeholder="Title" value={fieldData.title}  onChange={handleChange}/>
+          <Input
+            name="title"
+            placeholder="Title"
+            value={fieldData.title}
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item
