@@ -11,10 +11,12 @@ import { Login } from "./components/Login";
 import { Context } from "./context/Context";
 import About from "./components/About";
 import { Logout } from "./components/Logout";
-import { useLocalStorage, withAuth } from "./hooks/CustomHooks";
+import { useLocalStorage, withAuth, useForm } from "./hooks/CustomHooks";
 import AddRecipeForm from "./components/AddRecipeForm";
 import SingleRecipe from "./components/SingleRecipe";
 import { useHistory } from "react-router-dom";
+import EditRecipe from "./components/EditRecipeForm ";
+
 
 const { Header, Content } = Layout;
 
@@ -159,7 +161,8 @@ const App = props => {
           setRecipe,
           currentRecipeId,
           setCurrentRecipeId,
-          getCurrentRecipeId
+          getCurrentRecipeId,
+          useForm 
         }}
       >
         <Layout>
@@ -175,6 +178,7 @@ const App = props => {
               <Route exact path="/logout" component={Logout} />
               <Route exact path="/addrecipe" component={AddRecipeForm} />
               <Route exact path={`/recipe`} component={SingleRecipe} />
+              <Route exact path={`/editrecipe/:id`} component={EditRecipe} />
             </Switch>
           </Content>
         </Layout>

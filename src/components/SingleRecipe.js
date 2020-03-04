@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../context/Context";
 import styled from "styled-components";
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 export default function SingleRecipe() {
   const { recipe, currentRecipeId } = useContext(Context);
@@ -9,7 +10,9 @@ console.log(currentRecipeId)
   return (
     <StyledDiv>
       <h1>{recipe.title}</h1>
-      <Button >Edit Recipe</Button>&nbsp;&nbsp;
+      <Link to={`/editrecipe/${currentRecipeId}`}>
+      <Button >Edit Recipe</Button>
+      </Link>
       <h1>Ingredients</h1>
        <h1> {recipe.ingredients}</h1>
        <h2>Directions</h2>

@@ -19,13 +19,7 @@ export default function Recipes() {
   return (
     <StyledCards className="recipes">
       <h1>Secret Family Recipes:</h1>
-      <span>
-
-
-
-      </span>
-
-      <StyledCard>
+           <StyledCard>
         {filteredRecipes.map(recipe => {
           return <RecipeCard key={recipe.id} recipe={recipe} />;
         })}
