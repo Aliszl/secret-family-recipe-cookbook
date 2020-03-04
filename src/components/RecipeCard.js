@@ -1,20 +1,8 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
-import { Card, Avatar, Button } from "antd";
+import { Card, Button } from "antd";
 import styled from "styled-components";
 
-// const tabList = [
-//   {
-//     key: "tab1",
-//     tab: "tab1"
-//   },
-//   {
-//     key: "tab2",
-//     tab: "tab2"
-//   }
-// ];
-
-//
 const { Meta } = Card;
 export default function RecipeCard(props) {
   const { deleteRecipe, getCurrentRecipeId } = useContext(Context);

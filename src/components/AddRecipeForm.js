@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
 import { Context } from "../context/Context";
 import { useHistory } from "react-router-dom";
-import {PictureTwoTone, CameraOutlined} from "@ant-design/icons";
+import { CameraOutlined} from "@ant-design/icons";
 import styled from "styled-components";
 
 const layout = {
@@ -62,8 +62,6 @@ export default function AddRecipeForm(props) {
             name="recipe_image"
             prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="url"
-            //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-
             onChange={handleChange}
           />
         </Form.Item>
@@ -113,28 +111,6 @@ export default function AddRecipeForm(props) {
           />
         </Form.Item>
 
-        {/* <Form.Item
-          label="entered by"
-          rules={[{ required: true, message: "source" }]}
-        >
-          <Input name="source" placeholder="Source" onChange={handleChange} />
-        </Form.Item>
-
-        <Form.Item label="bio" rules={[{ required: true, message: "bio" }]}>
-          <Input name="bio" placeholder="Bio" onChange={handleChange} />
-        </Form.Item> */}
-
-        {/* <Form.Item
-          label="source_image"
-          rules={[{ required: true, message: "source_image" }]}
-        >
-          <Input
-            name="source_image"
-            //  value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Creative-Tail-People-man-2.svg/128px-Creative-Tail-People-man-2.svg.png"
-            onChange={handleChange}
-            placeholder="Avatar Image URL"
-          />
-        </Form.Item> */}
 
         <Form.Item {...tailLayout}>
           <Button
@@ -176,11 +152,7 @@ font-size:3rem;
     width:90%;
   
   }
-  /* @media only screen and (max-width: 600px) {
-    padding: 2.5rem 1.5rem !important;
-    margin: 1.5rem !important;
-    width: 100vw;
-  } */
+ 
   Form.Item{
     font-size:3rem;
   }
@@ -195,3 +167,11 @@ font-size:3rem;
   }
   }
 `;
+
+ /* @media only screen and (max-width: 600px) {
+    padding: 2.5rem 1.5rem !important;
+    margin: 1.5rem !important;
+    width: 100vw;
+  } */
+
+      

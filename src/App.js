@@ -25,7 +25,7 @@ const App = props => {
   const [recipes, setRecipes] = useState([]);
   const [searchValue, setSearchValue] = useLocalStorage("");
   const [homeSearch, setHomeSearch] = useState("");
- 
+
   const [currentRecipeId, setCurrentRecipeId] = useState(null);
 
   const [newUser, setNewUser] = useState({
@@ -42,10 +42,10 @@ const App = props => {
     description: "",
     ingredients: "",
     directions: "",
-    Notes: "",
-    source: "",
-    bio: "",
-    source_image: ""
+    Notes: ""
+    // source: "",
+    // bio: "",
+    // source_image: ""
   };
   const [newRecipe, setNewRecipe] = useState(initialRecipeFormValues);
   const [recipe, setRecipe] = useState(initialRecipeFormValues);
@@ -54,7 +54,6 @@ const App = props => {
     password: ""
   });
 
-  
   const getAllRecipes = () => {
     withAuth()
       .get("https://lambda-cook-book.herokuapp.com/api/recipes")
@@ -78,64 +77,58 @@ const App = props => {
         console.log("delete:", response.data);
         setRecipe(response.data.data);
         getAllRecipes();
-        // setRecipes(currentRecipes=>{
-        //   return currentRecipes.map(r=>{
-        //     if(r.id === id){
-        //       return response.data
-        //     }
-        //     return r
-        //   })
-        // })
       })
       .catch(error => {
         console.error(error);
       });
   };
-  
 
   const getCurrentRecipeId = (evt, id) => {
-    console.log("click", id);
-
     withAuth()
       .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        // console.log(response.data.data.id);
         setRecipe(response.data.data);
         setCurrentRecipeId(response.data.data.id);
-        console.log(currentRecipeId);
         jumpToRecipeID.push("/recipe");
-        //  <Redirect to={{
-        //    pathname:`/${id}`
-        //  }}/>
       })
       .catch(error => {
         console.error(error);
       });
   };
-  // const getCurrentRecipeId = (evt, id) => {
-  //   console.log("click", id);
-  //   const currentRecipe = recipes.find(recipe => recipe.id === currentRecipeId);
-  // };
-  // const recipeById = (evt, id)=>{
-  // console.log("click", id);
-  // recipes.filter(recipe =>
-  //   recipe =>recipe.id === id
-  // );
-
-
-  const getOneRecipe = () => {
+  const updateRecipe = ({
+    id,
+    title,
+    recipe_image,
+    description,
+    ingredients,
+    directions,
+    Notes
+  }) => {
     withAuth()
-      .get(`https://lambda-cook-book.herokuapp.com/api/recipes/${currentRecipeId}`)
-      .then(response => {
-        console.log(response)
-        // setRecipe(response.data.data);
+    .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, { title,
+    recipe_image,
+    description,
+    ingredients,
+    directions,
+    Notes }).then(res => {
+      
+      setCurrentRecipeId(null)
+  
+      setRecipes(recipes => {
+        return recipes.map(r => {
+          if (r.id === id) {
+            return res.data
+          }
+          return r
+        })
       })
-      .catch(error => {
-        debugger;
-      });
+    })
+    .catch(err => {
+      debugger
+    })
+
   };
 
-  console.log(currentRecipeId);
   return (
     <div className="App">
       <Context.Provider
@@ -166,7 +159,6 @@ const App = props => {
           setRecipe,
           currentRecipeId,
           setCurrentRecipeId,
-          getOneRecipe,
           getCurrentRecipeId
         }}
       >

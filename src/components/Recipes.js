@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
 import { Context } from "../context/Context";
-import { Spinner } from "reactstrap";
+
 
 
 export default function Recipes() {
@@ -16,7 +16,6 @@ export default function Recipes() {
     char.title.toLowerCase().includes(homeSearch.toLowerCase())
   );
 
-  console.log(filteredRecipes);
   return (
     <StyledCards className="recipes">
       <h1>Secret Family Recipes:</h1>
