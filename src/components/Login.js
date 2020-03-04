@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from "antd";
 import { Context } from "../context/Context";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const layout = {
@@ -16,7 +16,7 @@ const tailLayout = {
 
 export function Login(props) {
   const { loginUser, setLoginUser } = useContext(Context);
-  // const history = useHistory();
+  const jumpToHome = useHistory();
 
   const onFinish = values => {
     console.log("Success:", values);
@@ -44,6 +44,7 @@ export function Login(props) {
 
         localStorage.setItem("token", response.data.token);
         console.log(response.data.token);
+        jumpToHome.push("/recipes")
       })
       .catch(error => {
         alert(error.message);

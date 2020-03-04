@@ -1,11 +1,9 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 // import { withAuth } from "../hooks/CustomHooks";
 import { Form, Input, Button } from "antd";
 import { Context } from "../context/Context";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-
-
 
 const layout = {
   labelCol: { span: 8 },
@@ -16,7 +14,10 @@ const tailLayout = {
 };
 
 export default function AddRecipeForm(props) {
-  const { newRecipe, setNewRecipe, initialRecipeFormValues, withAuth, getAllRecipes } = useContext(Context);
+  const history = useHistory();
+  const { newRecipe, setNewRecipe, withAuth, getAllRecipes } = useContext(
+    Context
+  );
 
   const onFinish = values => {
     console.log("Success:", values);
@@ -39,8 +40,8 @@ export default function AddRecipeForm(props) {
       .then(response => {
         console.log(response);
         // props.history.push("/facilityList/");
-        getAllRecipes()
-        // setNewRecipe(initialRecipeFormValues)
+        // getAllRecipes();
+        history.push("/recipes");
       })
       .catch(e => {
         alert(e.message);
@@ -62,41 +63,35 @@ export default function AddRecipeForm(props) {
           <Input
             name="recipe_image"
             //  prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }}/>}
-            
+
             onChange={handleChange}
           />
         </Form.Item>
 
-        <Form.Item
-          label="Title"
-          rules={[{ required: true, message: "title" }]}
-         
-        >
-          <Input 
-          name="title" 
-          placeholder="Title"
-          onChange={handleChange} 
-          />
+        <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
+          <Input name="title" placeholder="Title" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item
           label="Description"
           rules={[{ required: true, message: "description" }]}
         >
-          <Input 
-          name="description" 
-          placeholder="Description"
-          onChange={handleChange} />
+          <Input
+            name="description"
+            placeholder="Description"
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item
           label="ingredients"
           rules={[{ required: true, message: "ingredients" }]}
         >
-          <Input 
-          name="ingredients"
-          placeholder="ingredients list"
-           onChange={handleChange} />
+          <Input
+            name="ingredients"
+            placeholder="Ingredients list"
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item
@@ -104,35 +99,29 @@ export default function AddRecipeForm(props) {
           rules={[{ required: true, message: "directions" }]}
         >
           <Input
-           name="directions" 
-           placeholder="directions"
-           onChange={handleChange} 
-           />
+            name="directions"
+            placeholder="Directions"
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item label="Notes" rules={[{ required: true, message: "Notes" }]}>
           <Input
-           name="Notes"
-           placeholder="notes about recipe" 
-           onChange={handleChange} />
+            name="Notes"
+            placeholder="Notes about recipe"
+            onChange={handleChange}
+          />
         </Form.Item>
 
         <Form.Item
           label="entered by"
           rules={[{ required: true, message: "source" }]}
         >
-          <Input
-           name="source" 
-           placeholder="source"
-           onChange={handleChange} 
-           />
+          <Input name="source" placeholder="Source" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item label="bio" rules={[{ required: true, message: "bio" }]}>
-          <Input
-          name="bio" 
-          placeholder="bio"
-          onChange={handleChange} />
+          <Input name="bio" placeholder="Bio" onChange={handleChange} />
         </Form.Item>
 
         <Form.Item
@@ -140,10 +129,11 @@ export default function AddRecipeForm(props) {
           rules={[{ required: true, message: "source_image" }]}
         >
           <Input
-           name="source_image" 
-          //  value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Creative-Tail-People-man-2.svg/128px-Creative-Tail-People-man-2.svg.png"
-           onChange={handleChange} 
-           />
+            name="source_image"
+            //  value="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Creative-Tail-People-man-2.svg/128px-Creative-Tail-People-man-2.svg.png"
+            onChange={handleChange}
+            placeholder="Avatar Image URL"
+          />
         </Form.Item>
 
         <Form.Item {...tailLayout}>
@@ -161,6 +151,8 @@ export default function AddRecipeForm(props) {
 }
 
 const StyledContainer = styled.div`
+
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -168,14 +160,38 @@ const StyledContainer = styled.div`
 `;
 
 const StyledForm = styled(Form)`
-  max-width: 35rem;
+display:flex;
+flex-direction:column;
+justify-content:center;
+font-size:3rem;
+  width: 50vw;
+  font-size:3rem;
   padding: 2.5rem !important;
   margin: 2.5rem !important;
   background: #fbfbfb;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
-  @media only screen and (max-width: 600px) {
+  @media(min-width: 768px) {
+    margin:0 auto;
+    width:90%;
+  
+  }
+  /* @media only screen and (max-width: 600px) {
     padding: 2.5rem 1.5rem !important;
     margin: 1.5rem !important;
+    width: 100vw;
+  } */
+  Form.Item{
+    font-size:3rem;
+  }
+  input{
+    font-size:3rem;
+    width:62%;
+    height:50px;
+    @media(min-width: 768px) {
+    margin:0 auto;
+    width:90%;
+  
+  }
   }
 `;

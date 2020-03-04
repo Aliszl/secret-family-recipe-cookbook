@@ -20,7 +20,6 @@ export default Home;
 
 const MyDiv = styled.div`
 margin: 0 auto;
-
 border: 1px, solid, #0088DD;
 img{
   width:600px;
@@ -46,6 +45,8 @@ h4 {
 
 @media(min-width: 768px) {
 
+    margin:0 auto;
+  
   h1 {
   color:#001a33;
   margin-top: 18px;
