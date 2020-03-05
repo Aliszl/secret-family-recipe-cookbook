@@ -1,34 +1,30 @@
-import React, { useEffect, useContext } from "react";
-import RecipeCard from "./RecipeCard";
-import styled from "styled-components";
-import { Context } from "../context/Context";
-import SearchBar from "./SearchBar"
-
-
+import React, { useEffect, useContext } from 'react';
+import RecipeCard from './RecipeCard';
+import styled from 'styled-components';
+import { Context } from '../context/Context';
+import SearchBar from './SearchBar';
 
 export default function Recipes() {
   const { recipes, searchValue, getAllRecipes } = useContext(Context);
 
-  useEffect(() => {
-    getAllRecipes();
-  }, []);
+  // useEffect(() => {
+  //   getAllRecipes();
+  // }, []);
 
   const filteredRecipes = recipes.filter(char =>
     char.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
-    <StyledCards className="recipes">
-      <SearchBar/>
+    <StyledCards className='recipes'>
+      <SearchBar />
       <h1>Secret Family Recipes:</h1>
-           <StyledCard>
+      <StyledCard>
         {filteredRecipes.map(recipe => {
           return <RecipeCard key={recipe.id} recipe={recipe} />;
         })}
       </StyledCard>
     </StyledCards>
-
-
   );
 }
 const StyledCards = styled.div`
@@ -38,13 +34,12 @@ const StyledCards = styled.div`
 `;
 const StyledCard = styled.div`
   margin-top: 20px;
-    display: flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 
-  @media(min-width: 768px) {
-    margin:0 auto;
-  
+  @media (min-width: 768px) {
+    margin: 0 auto;
   }
 
   img {
