@@ -11,18 +11,20 @@ export default function RecipeCard(props) {
   return (
     <StyledCard>
       <Card
-        style={{ width: 620 }}
+        style={{ width: 602 }}
         cover={<img alt="example" src={recipe_image} />}
         actions={[]}
       >
         <Meta title={title} description={description} />
+        <br/>
         <Button onClick={e => getCurrentRecipeId(e, id)}>View details</Button>
         &nbsp;&nbsp;
         <Button type="primary" onClick={e => deleteRecipe(e, id)}>
           Delete
         </Button>
-        &nbsp;&nbsp;
       </Card>
+        <br/>
+        <br/>
     </StyledCard>
   );
 }
@@ -32,6 +34,7 @@ const StyledCard = styled.div`
 
   display: flex;
   flex-direction: column;
+  justify-content:space-between;
 
   @media (min-width: 768px) {
     margin: 0 auto;

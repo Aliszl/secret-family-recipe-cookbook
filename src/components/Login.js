@@ -27,24 +27,19 @@ export default function Login(props) {
     console.log("Failed:", errorInfo);
   };
   const handleChange = e => {
-    console.log(e.target.value);
-    setLoginUser({
+        setLoginUser({
       ...loginUser,
       [e.target.name]: e.target.value
     });
   };
   const handleSubmitLogin = (e, inputValues) => {
-    console.log(inputValues);
-    axios
+        axios
       .post(
         "https://lambda-cook-book.herokuapp.com/api/auth/login",
         inputValues
       )
       .then(response => {
-        console.log(response);
-
         localStorage.setItem("token", response.data.token);
-        console.log(response.data.token);
         jumpToHome.push("/recipes")
       })
       .catch(error => {

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../context/Context";
 import { Form, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import styled from "styled-components";
 
 export default function SearchBar() {
   const { setSearchValue, searchValue } = useContext(Context);
@@ -13,7 +14,7 @@ export default function SearchBar() {
   };
 
   return (
-    <section className="search-form">
+    <StyledSearchBar className="search-form">
       <Form.Item>
         <Input
           name="search"
@@ -23,6 +24,10 @@ export default function SearchBar() {
           value={searchValue}
         />
       </Form.Item>
-    </section>
+    </StyledSearchBar>
   );
 }
+
+const StyledSearchBar = styled.section`
+width:38.2vw;
+`

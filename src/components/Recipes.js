@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import SearchBar from "./SearchBar";
 
 export default function Recipes() {
-  const { recipes, searchValue } = useContext(Context);
+  const { recipes, searchValue, getAllRecipes } = useContext(Context);
+
+  useEffect(() => {
+    getAllRecipes();
+  }, []);
 
   const filteredRecipes = recipes.filter(char =>
     char.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -13,8 +17,10 @@ export default function Recipes() {
 
   return (
     <StyledCards className="recipes">
+      <h1>Recipe Archive</h1>
+     <div className="searchBar">
       <SearchBar />
-      <h1>Secret Family Recipes:</h1>
+     </div>
       <StyledCard>
         {filteredRecipes.map(recipe => {
           return <RecipeCard key={recipe.id} recipe={recipe} />;
@@ -27,6 +33,11 @@ const StyledCards = styled.div`
   margin: 20px auto;
   display: flex;
   flex-direction: column;
+  .searchBar{
+    display:flex;
+    justify-content:center;
+
+  }
 `;
 const StyledCard = styled.div`
   margin-top: 20px;
