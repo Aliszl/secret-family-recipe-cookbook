@@ -1,10 +1,12 @@
 .App {
-  font-family: 'Tangerine', cursive;
+  /* font-family: 'Tangerine', cursive; */
+  font-family: 'Pacifico', cursive;
+
   text-align: center;
 
 }
 a{
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 

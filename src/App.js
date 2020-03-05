@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -23,10 +23,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [registerError, setRegisterError] = useState("");
   const [recipes, setRecipes] = useState([]);
-  // const [searchValue, setSearchValue] = useLocalStorage("");
-  const [homeSearch, setHomeSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
-
   const [currentRecipeId, setCurrentRecipeId] = useState(null);
 
   const [newUser, setNewUser] = useState({
@@ -37,6 +34,7 @@ const App = () => {
     password: "",
     confirmPassword: ""
   });
+
   const initialRecipeFormValues = {
     recipe_image: "https://i.imgur.com/HW2AIVK.jpg",
     title: "",
@@ -44,11 +42,8 @@ const App = () => {
     ingredients: "",
     directions: "",
     Notes: ""
-    // source: "",
-    // bio: "",
-    // source_image: ""
   };
-  const [newRecipe, setNewRecipe] = useState(initialRecipeFormValues);
+
   const [recipe, setRecipe] = useState(initialRecipeFormValues);
   const [loginUser, setLoginUser] = useState({
     usernameoremail: "",
@@ -65,10 +60,10 @@ const App = () => {
         debugger;
       });
   };
-  // const handleChangeSearchbar = evt => {
-  //   console.log(evt.target.value)
-  //   setSearchValue(evt.target.value);
-  // };
+
+  useEffect(() => {
+    getAllRecipes();
+  }, []);
 
   const deleteRecipe = (evt, id) => {
     console.log("click", id);
@@ -97,14 +92,7 @@ const App = () => {
         console.error(error);
       });
   };
-  function RouteProtected({ children, ...rest }) {
-    const tokenExists = localStorage.getItem("token");
-    return (
-      <Route {...rest}>
-        {tokenExists ? children : <Redirect to="/login" />}
-      </Route>
-    );
-  }
+
 
   return (
     <div className="App">
@@ -125,12 +113,7 @@ const App = () => {
           withAuth,
           searchValue,
           setSearchValue,
-          // handleChangeSearchbar,
-          homeSearch,
-          setHomeSearch,
           deleteRecipe,
-          newRecipe,
-          setNewRecipe,
           initialRecipeFormValues,
           recipe,
           setRecipe,
@@ -145,20 +128,18 @@ const App = () => {
             <Navigation />
           </Header>
           <Content>
-            <Switch>
-              <Route exact path="/" component={About} />
-              <RouteProtected exact path="/recipes">
-                <Home />
-              </RouteProtected>
-              <Route exact path="/register" component={RegisterForm} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/logout" component={Logout} />
-              <RouteProtected exact path="/addrecipe">
-                <AddRecipeForm />
-              </RouteProtected>
-              <Route exact path={`/recipe`} component={SingleRecipe} />
-              <Route exact path={`/editrecipe/:id`} component={EditRecipe} />
-            </Switch>
+            <Route exact path="/" component={About} />
+            <RouteProtected exact path="/recipes">
+              <Home />
+            </RouteProtected>
+            <Route exact path="/register" component={RegisterForm} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <RouteProtected exact path="/addrecipe">
+              <AddRecipeForm />
+            </RouteProtected>
+            <Route exact path={`/recipe`} component={SingleRecipe} />
+            <Route exact path={`/editrecipe/:id`} component={EditRecipe} />
           </Content>
         </Layout>
       </Context.Provider>
@@ -168,37 +149,23 @@ const App = () => {
 
 export default App;
 
-// const updateRecipe = ({
-//   id,
-//   title,
-//   recipe_image,
-//   description,
-//   ingredients,
-//   directions,
-//   Notes
-// }) => {
-//   withAuth()
-//     .put(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`, {
-//       title,
-//       recipe_image,
-//       description,
-//       ingredients,
-//       directions,
-//       Notes
-//     })
-//     .then(res => {
-//       setCurrentRecipeId(null);
-
-//       setRecipes(recipes => {
-//         return recipes.map(r => {
-//           if (r.id === id) {
-//             return res.data;
-//           }
-//           return r;
-//         });
-//       });
-//     })
-//     .catch(err => {
-//       debugger;
-//     });
-// };
+function RouteProtected({ children, ...rest }) {
+  const tokenExists = localStorage.getItem("token");
+  return (
+    <Route {...rest}>
+      {tokenExists ? children : <Redirect to="/login" />}
+    </Route>
+  );
+}
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("token") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);

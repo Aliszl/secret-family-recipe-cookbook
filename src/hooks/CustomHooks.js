@@ -15,6 +15,23 @@ export function withAuth() {
   });
   return instance;
 }
+export const useLocalStorage = (key, initialValue) => {
+
+  const [storedValue, setStoredValue] = useState(key, () => {
+
+    const currentValue = localStorage.getItem(key);
+
+    return currentValue ? JSON.parse(currentValue) : initialValue;
+  })
+
+  const setValue = value => {
+    setStoredValue(value);
+
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+  return [storedValue, setValue]
+}
+
 
 export const useForm = (callback) => {
   const [inputs, setInputs] = useState({});
@@ -34,67 +51,3 @@ export const useForm = (callback) => {
   };
 }
 
-export const useLocalStorage = (key, initialValue) => {
-
-  const [storedValue, setStoredValue] = useState(key, () => {
-
-    const currentValue = localStorage.getItem(key);
-
-    return currentValue ? JSON.parse(currentValue) : initialValue;
-  })
-
-  const setValue = value => {
-    setStoredValue(value);
-
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-  return [storedValue, setValue]
-}
-
-
-// const history = useHistory()
-// export function handleSubmit(e, inputValues ) {
-//   e.preventDefault();
-//      axios
-//     .post("https://lambda-cook-book.herokuapp.com/api/auth/register", inputValues)
-//     .then(response => {
-//       console.log(response);
-//       setLoadingUser(false);
-//       history.push("/login");
-//     })
-//     .catch(error => {
-//       let { message } = error.response.data;
-//       setLoadingUser(false);
-//       setRegisterError(message);
-//     });
- 
-
-// }
-// export const registerUser = (values) => {
-
-//   const [loadingUser, setLoadingUser] = useState(false);
-//   const [newUser, setNewUser] = useState({
-//     firstname: "",
-//     lastname: "",
-//     username: "",
-//     email: "",
-//     password: "",
-//     confirmPassword: ""
-//   })
-//   setLoadingUser(true);
-
-
-//     axios.post(`https://lambda-cook-book.herokuapp.com/api/auth/register`)
-//       .then(res => {
-//         console.log(res);
-//         setNewUser(res.data);
-//         setLoadingUser(false);
-//         props.history.push("/login");
-//       })
-//       .catch(err => {
-//         debugger
-//       })
-
-
-//   return newUser
-// }

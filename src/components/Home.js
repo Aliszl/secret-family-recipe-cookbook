@@ -2,11 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Recipes from "./Recipes";
 
-
 const Home = () => {
-  
   return (
-    <MyDiv> 
+    <MyDiv>
       <Recipes />
     </MyDiv>
   );
@@ -20,7 +18,6 @@ border: 1px, solid, #0088DD;
 img{
   width:600px;
 }
-
 
 h3{
   text-align: center;

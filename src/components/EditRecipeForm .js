@@ -88,7 +88,8 @@ export default function EditRecipeForm() {
           />
         </Form.Item>
 
-        <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
+        <Form.Item label="Title" 
+        rules={[{ required: true, message: "title" }]}>
           <Input
             name="title"
             placeholder="Title"
