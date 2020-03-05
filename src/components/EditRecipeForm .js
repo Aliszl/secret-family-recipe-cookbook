@@ -15,12 +15,8 @@ const tailLayout = {
 
 export default function EditRecipeForm() {
   const { withAuth, recipes } = useContext(Context);
-  // const { inputs, handleInputChange, handleSubmit } = useForm();
   const history = useHistory();
   const { id } = useParams();
-
-  console.log(id);
-  console.log(recipes);
 
   const onFinish = values => {
     console.log("Success:", values);
@@ -42,10 +38,8 @@ export default function EditRecipeForm() {
     directions: currentRecipeData.directions,
     Notes: currentRecipeData.Notes
   });
-  console.log(currentRecipeData);
 
   const handleChange = e => {
-    console.log(e.target.value);
     setFieldData({
       ...fieldData,
       [e.target.name]: e.target.value
@@ -58,7 +52,6 @@ export default function EditRecipeForm() {
         fieldData
       )
       .then(response => {
-        console.log(response);
         history.push("/recipes");
       })
       .catch(e => {
@@ -88,8 +81,7 @@ export default function EditRecipeForm() {
           />
         </Form.Item>
 
-        <Form.Item label="Title" 
-        rules={[{ required: true, message: "title" }]}>
+        <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
           <Input
             name="title"
             placeholder="Title"

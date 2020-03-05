@@ -61,17 +61,10 @@ const App = () => {
       });
   };
 
-  // useEffect(() => {
-  //   getAllRecipes();
-  // }, []);
-
-  const deleteRecipe = (evt, id) => {
-    console.log("click", id);
-
+   const deleteRecipe = (evt, id) => {
     withAuth()
       .delete(`https://lambda-cook-book.herokuapp.com/api/recipes/${id}`)
       .then(response => {
-        console.log("delete:", response.data);
         setRecipe(response.data.data);
         getAllRecipes();
       })
@@ -157,15 +150,3 @@ function RouteProtected({ children, ...rest }) {
     </Route>
   );
 }
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      localStorage.getItem("token") ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      )
-    }
-  />
-);

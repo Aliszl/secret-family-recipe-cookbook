@@ -38,8 +38,7 @@ export default function AddRecipeForm(props) {
   };
 
   const handleChange = e => {
-    console.log(e.target.value);
-    setNewRecipe({
+       setNewRecipe({
       ...newRecipe,
       [e.target.name]: e.target.value
     });
@@ -48,7 +47,6 @@ export default function AddRecipeForm(props) {
     withAuth()
       .post('https://lambda-cook-book.herokuapp.com/api/recipes', inputValues)
       .then(response => {
-        console.log(response);
         getAllRecipes();
         history.push('/recipes');
       })
