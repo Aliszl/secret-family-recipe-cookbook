@@ -61,9 +61,9 @@ const App = () => {
       });
   };
 
-  useEffect(() => {
-    getAllRecipes();
-  }, []);
+  // useEffect(() => {
+  //   getAllRecipes();
+  // }, []);
 
   const deleteRecipe = (evt, id) => {
     console.log("click", id);

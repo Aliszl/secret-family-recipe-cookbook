@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import SearchBar from "./SearchBar";
 
 export default function Recipes() {
-  const { recipes, searchValue } = useContext(Context);
+  const { recipes, searchValue, getAllRecipes } = useContext(Context);
+
+  useEffect(() => {
+    getAllRecipes();
+  }, []);
 
   const filteredRecipes = recipes.filter(char =>
     char.title.toLowerCase().includes(searchValue.toLowerCase())
