@@ -60,12 +60,12 @@ const App = () => {
         debugger;
       });
   };
-  
+
   useEffect(() => {
     getAllRecipes();
   }, []);
 
-   const deleteRecipe = (evt, id) => {
+  const deleteRecipe = (evt, id) => {
     console.log("click", id);
 
     withAuth()
@@ -92,14 +92,7 @@ const App = () => {
         console.error(error);
       });
   };
-  function RouteProtected({ children, ...rest }) {
-    const tokenExists = localStorage.getItem("token");
-    return (
-      <Route {...rest}>
-        {tokenExists ? children : <Redirect to="/login" />}
-      </Route>
-    );
-  }
+
 
   return (
     <div className="App">
@@ -136,9 +129,9 @@ const App = () => {
           </Header>
           <Content>
             <Route exact path="/" component={About} />
-            <Route exact path="/recipes">
+            <RouteProtected exact path="/recipes">
               <Home />
-            </Route>
+            </RouteProtected>
             <Route exact path="/register" component={RegisterForm} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
@@ -155,3 +148,24 @@ const App = () => {
 };
 
 export default App;
+
+function RouteProtected({ children, ...rest }) {
+  const tokenExists = localStorage.getItem("token");
+  return (
+    <Route {...rest}>
+      {tokenExists ? children : <Redirect to="/login" />}
+    </Route>
+  );
+}
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      localStorage.getItem("token") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
