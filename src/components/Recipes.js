@@ -17,8 +17,10 @@ export default function Recipes() {
 
   return (
     <StyledCards className="recipes">
+      <h1>Recipe Archive</h1>
+     <div className="searchBar">
       <SearchBar />
-      <h1>Secret Family Recipes:</h1>
+     </div>
       <StyledCard>
         {filteredRecipes.map(recipe => {
           return <RecipeCard key={recipe.id} recipe={recipe} />;
@@ -31,6 +33,11 @@ const StyledCards = styled.div`
   margin: 20px auto;
   display: flex;
   flex-direction: column;
+  .searchBar{
+    display:flex;
+    justify-content:center;
+
+  }
 `;
 const StyledCard = styled.div`
   margin-top: 20px;

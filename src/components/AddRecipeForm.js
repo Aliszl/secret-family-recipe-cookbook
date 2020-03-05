@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Context } from '../context/Context';
 import { useHistory } from 'react-router-dom';
-import { CameraOutlined } from '@ant-design/icons';
+import { CameraOutlined, EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const layout = {
@@ -84,6 +84,7 @@ export default function AddRecipeForm(props) {
             placeholder='Title'
             value={newRecipe.title}
             onChange={handleChange}
+            prefix={<EditOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
         </Form.Item>
 
@@ -96,6 +97,7 @@ export default function AddRecipeForm(props) {
             placeholder='Description'
             value={newRecipe.description}
             onChange={handleChange}
+            prefix={<EditOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
            
           />
         </Form.Item>
@@ -109,6 +111,7 @@ export default function AddRecipeForm(props) {
             placeholder='Ingredients list'
             value={newRecipe.ingredients}
             onChange={handleChange}
+            prefix={<EditOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
                    />
         </Form.Item>
 
@@ -121,6 +124,7 @@ export default function AddRecipeForm(props) {
             placeholder='Directions'
             value={newRecipe.directions}
             onChange={handleChange}
+            prefix={<EditOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
             
           />
         </Form.Item>
@@ -131,6 +135,7 @@ export default function AddRecipeForm(props) {
             placeholder='Notes about recipe'
                       onChange={handleChange}
             value={newRecipe.Notes}
+            prefix={<EditOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           />
         </Form.Item>
 
@@ -139,6 +144,7 @@ export default function AddRecipeForm(props) {
             onClick={e => handleSubmitRecipe(e, newRecipe)}
             type='primary'
             htmlType='submit'
+            
           >
             Submit Recipe
           </Button>
