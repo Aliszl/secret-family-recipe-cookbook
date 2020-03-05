@@ -75,7 +75,6 @@ export default function AddRecipeForm(props) {
             placeholder='url'
             value={newRecipe.recipe_image}
             onChange={handleChange}
-            value={newRecipe.recipe_image}
           />
         </Form.Item>
 
@@ -97,7 +96,7 @@ export default function AddRecipeForm(props) {
             placeholder='Description'
             value={newRecipe.description}
             onChange={handleChange}
-            value={newRecipe.description}
+           
           />
         </Form.Item>
 
@@ -110,8 +109,7 @@ export default function AddRecipeForm(props) {
             placeholder='Ingredients list'
             value={newRecipe.ingredients}
             onChange={handleChange}
-            value={newRecipe.ingredients}
-          />
+                   />
         </Form.Item>
 
         <Form.Item
@@ -123,7 +121,7 @@ export default function AddRecipeForm(props) {
             placeholder='Directions'
             value={newRecipe.directions}
             onChange={handleChange}
-            value={newRecipe.directions}
+            
           />
         </Form.Item>
 
@@ -131,8 +129,7 @@ export default function AddRecipeForm(props) {
           <Input
             name='Notes'
             placeholder='Notes about recipe'
-            value={newRecipe.Notes}
-            onChange={handleChange}
+                      onChange={handleChange}
             value={newRecipe.Notes}
           />
         </Form.Item>
@@ -152,6 +149,7 @@ export default function AddRecipeForm(props) {
 }
 
 const StyledContainer = styled.div`
+
   display: flex;
   justify-content: center;
   align-items: center;

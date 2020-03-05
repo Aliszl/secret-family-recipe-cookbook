@@ -1,23 +1,18 @@
-import React, { useEffect, useContext } from 'react';
-import RecipeCard from './RecipeCard';
-import styled from 'styled-components';
-import { Context } from '../context/Context';
-import SearchBar from './SearchBar';
+import React, { useContext } from "react";
+import RecipeCard from "./RecipeCard";
+import styled from "styled-components";
+import { Context } from "../context/Context";
+import SearchBar from "./SearchBar";
 
 export default function Recipes() {
   const { recipes, searchValue } = useContext(Context);
-
-
-  // useEffect(() => {
-  //   getAllRecipes();
-  // }, []);
 
   const filteredRecipes = recipes.filter(char =>
     char.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
-    <StyledCards className='recipes'>
+    <StyledCards className="recipes">
       <SearchBar />
       <h1>Secret Family Recipes:</h1>
       <StyledCard>
