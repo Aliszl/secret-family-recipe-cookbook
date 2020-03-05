@@ -63,11 +63,18 @@ export default function AddRecipeForm(props) {
             prefix={<CameraOutlined style={{ color: "rgba(0,0,0,.25)" }}/>}
             placeholder="url"
             onChange={handleChange}
+            value={newRecipe.recipe_image}
           />
         </Form.Item>
 
-        <Form.Item label="Title" rules={[{ required: true, message: "title" }]}>
-          <Input name="title" placeholder="Title" onChange={handleChange} />
+        <Form.Item label="Title" 
+        rules={[{ required: true, message: "title" }]}>
+          <Input 
+          name="title" 
+          placeholder="Title" 
+          onChange={handleChange}  
+          value={newRecipe.title}
+          />
         </Form.Item>
 
         <Form.Item
@@ -78,6 +85,7 @@ export default function AddRecipeForm(props) {
             name="description"
             placeholder="Description"
             onChange={handleChange}
+            value={newRecipe.description}
           />
         </Form.Item>
 
@@ -89,6 +97,7 @@ export default function AddRecipeForm(props) {
             name="ingredients"
             placeholder="Ingredients list"
             onChange={handleChange}
+            value={newRecipe.ingredients}
           />
         </Form.Item>
 
@@ -100,6 +109,7 @@ export default function AddRecipeForm(props) {
             name="directions"
             placeholder="Directions"
             onChange={handleChange}
+            value={newRecipe.directions}
           />
         </Form.Item>
 
@@ -108,6 +118,7 @@ export default function AddRecipeForm(props) {
             name="Notes"
             placeholder="Notes about recipe"
             onChange={handleChange}
+            value={newRecipe.Notes}
           />
         </Form.Item>
 

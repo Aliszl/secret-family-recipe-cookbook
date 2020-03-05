@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../context/Context";
 import { Form, Input, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -10,12 +10,12 @@ export default function SearchBar() {
   const { setSearchValue, searchValue } = useContext(Context);
 
   const handleChangeSearchbar = evt => {
-    console.log(evt.target.value)
+    console.log(evt.target.value);
     setSearchValue(evt.target.value);
   };
-const handleSubmitSearch = evt=>{
-  setSearchValue(evt.target.value);
-}
+  const handleSubmitSearch = evt => {
+    setSearchValue(evt.target.value);
+  };
   return (
     <section className="search-form">
       <Form.Item>

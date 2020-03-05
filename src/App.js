@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout } from "antd";
 import Navigation from "./components/Navigation";
@@ -65,6 +65,10 @@ const App = () => {
         debugger;
       });
   };
+  useEffect(() => {
+    getAllRecipes();
+  }, []);
+
   // const handleChangeSearchbar = evt => {
   //   console.log(evt.target.value)
   //   setSearchValue(evt.target.value);
