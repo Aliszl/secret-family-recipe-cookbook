@@ -8,6 +8,7 @@ const Home = () => {
     <MyDiv>
       <div className="title">
         <h1>Secret Family Recipes</h1>
+        <img src={cartoon} alt="secret family recipe"/>
       </div>
       <h2>
         Anyone can go out and buy a cookbook these days, but I want a place to
@@ -47,10 +48,7 @@ const Home = () => {
           eveniet iure porro velit enim ut, facere incidunt odit.
         </h3>
         <Carousel className="carousel" autoplay>
-          <div className="carouselpic">
-            <img src={cartoon} alt="secret family recipe" />
-          </div>
-          <div>
+                   <div>
             <img src={dummyData[0].recipe_image} alt="" />
           </div>
           <div>
@@ -100,6 +98,9 @@ const MyDiv = styled.div`
   font-family: 'Tangerine', cursive;
 margin: 0 auto;
 border: 1px, solid, #0088DD;
+img{
+  width:30vw;
+}
 .carouselandtext{
   font-size:3rem;
   margin-top:40px;
@@ -115,34 +116,28 @@ border-radius:8px;
 img{
   display:flex;
   justify-content:center;
-margin-left:200px;
-  width: 400px;
+margin-left:100px;
+height:400px;
+  /* width: 400px; */
   border-radius:8px;
 }
   }
 }
-
-}
 .ant-carousel .slick-slide {
   text-align: center;
-  height: 600px;
+  height: auto;
   line-height: 160px;
   /* background: #364d79; */
   overflow: hidden;
 }
-
 .ant-carousel .slick-slide h3 {
   color: #fff;
 }
-
-
 h3{
   text-align: center;
   font-size:5vh;
 }
-
-h4 {
-  
+h4 { 
   font-size:6vw;
 }
 .text-container{
@@ -154,6 +149,28 @@ h4 {
 }
 
 @media(min-width: 768px) {
+  .carouselandtext{
+    display:flex;
+    flex-direction:column-reverse;
+  .carousel{
+    margin: 0, auto;
+    width:100vw;
+    align:center;
+    .carouselpic{
+width:100vw;
+border-radius:8px;
+align-items:center;
+    }
+img{
+  display:flex;
+  justify-content:center;
+  margin-left:28vw;
+/* margin-left:100px; */
+  width: 400px;
+  border-radius:8px;
+}
+  }
+}
 
   h1 {
   
@@ -174,7 +191,7 @@ h4 {
   font-weight: bolder;
   font-size:1vw;
 }
-
+}
 `;
 const dummyData = [
   {
