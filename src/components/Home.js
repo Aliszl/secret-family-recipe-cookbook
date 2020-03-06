@@ -37,7 +37,7 @@ h4 {
 }
 
 @media(min-width: 768px) {
-
+ 
     margin:0 auto;
   
   h1 {
